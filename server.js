@@ -1,17 +1,19 @@
+require("dotenv").config();
+
 const express = require("express");
-const mysql = require("mysql");
+const bodyParser = require("body-parser");
 
 const users = require("./routes/api/users");
+const insert_data = require("./routes/api/insert_data");
+const management = require("./routes/api/management");
+
+const conn = require("./config/connection");
 
 const app = express();
 
-const connection = mysql.createPool({
-  connectionLimit: 50,
-  host: "localhost",
-  user: "root",
-  password: "",
-  database: "startupDB"
-});
+// Body Parser
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 /*
 connection.connect(err => {
@@ -24,14 +26,7 @@ connection.connect(err => {
 */
 
 app.get("/", (req, res) => {
-  connection.getConnection((err, tempCon) => {
-    if (err) {
-      tempCon.release();
-      console.log("Error!");
-    } else {
-      console.log("Successfully connected!");
-    }
-
+  conn.getConnection((err, tempCon) => {
     tempCon.query("SELECT * FROM students", (err, rows, fields) => {
       tempCon.release();
       if (err) {
@@ -45,8 +40,10 @@ app.get("/", (req, res) => {
 
 // Use Routes
 app.use("/api/users", users);
+app.use("/api/insert", insert_data);
+app.use("/api/management", management);
 
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || process.env.USER_PORT;
 
 app.listen(port, (req, res) => {
   console.log(`The server is running on port ${port}......`);
