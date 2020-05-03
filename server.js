@@ -28,7 +28,6 @@ connection.connect(err => {
 app.get("/", (req, res) => {
   conn.getConnection((err, tempCon) => {
     tempCon.query("SELECT * FROM students", (err, rows, fields) => {
-      tempCon.release();
       if (err) {
         console.log("Error!");
       } else {

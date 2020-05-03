@@ -1,10 +1,15 @@
 const express = require("express");
-const bcryptjs = require("bcryptjs");
+const { genSalt, compare, hash } = require("bcryptjs");
 
 const router = express.Router();
 
+// Load DB Connection
 const conn = require("../../config/connection");
 
+// Load Input Validation
+const validateRegisterInput = require("../../validation/register");
+
+// Current Date & Time
 const current_dateTime = new Date();
 const curr_date = current_dateTime.toLocaleDateString();
 const curr_time = current_dateTime.toLocaleTimeString();
@@ -92,25 +97,59 @@ router.post("/registerST", (req, res) => {
 // @access  Public
 router.get("/login", (req, res) => {});
 
-// @route   GET api/users/register
+// @route   POST api/users/register
 // @desc    School Register
 // @access  Public
-router.get("/register", (req, res) => {
+router.post("/register", (req, res) => {
+  const { errors, isValid } = validateRegisterInput(req.body);
+
+  if (!isValid) {
+    return res.status(400).json(errors);
+  }
+
   const institute = {
-    institute_id: req.body.institute_id, // must be given by us to the institute for now.
+    institute_id: req.body.institute_id,
+    password: req.body.password,
     institute_name: req.body.institute_name,
     institute_principal: req.body.institute_principal,
     education_type: req.body.education_type,
     phone_number: req.body.phone_number,
-    date_of_join: curr_date + " , " + curr_time,
-  };
-
-  const address = {
     address: req.body.address,
     area: req.body.area,
     state: req.body.state,
     city: req.body.city,
+    date_of_creation: curr_date,
+    time_of_creation: curr_time,
   };
+
+  genSalt(10, (err, salt) => {
+    if (err) {
+      console.log("GenSalt Error : " + err);
+    }
+    hash(institute.password, salt, (err, hash) => {
+      if (err) {
+        console.log("Hash Error : " + err);
+      }
+      institute.password = hash;
+      const instituteJSON = JSON.stringify(institute);
+
+      conn.query(
+        `call insert_management_details(?, @message, @success); select @message, @success`,
+        instituteJSON,
+        (err, rows) => {
+          if (err) {
+            console.log("Procedure Error : " + err);
+          } else {
+            console.log("Procedure executed!");
+            res.json({
+              success: rows[1][0]["@success"],
+              message: rows[1][0]["@message"],
+            });
+          }
+        }
+      );
+    });
+  });
 });
 
 module.exports = router;
