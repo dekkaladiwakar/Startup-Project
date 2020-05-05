@@ -40,15 +40,18 @@ const userRegister = (data) =>
             if (err) {
               console.log("Procedure Error : " + err);
               reject({
-                success: 0,
+                success: false,
                 message: "Unexpected Error. Sorry for the inconvenience.",
               });
             } else {
               console.log("Procedure executed!");
-              resolve({
-                success: rows[1][0]["@success"],
-                message: rows[1][0]["@message"],
-              });
+              const result = { success: "", message: "" };
+
+              rows[1][0]["@success"] === 1
+                ? ((result.success = true),
+                  (result.message = rows[1][0]["@message"]))
+                : (result.success = false);
+              resolve(result);
             }
           }
         );

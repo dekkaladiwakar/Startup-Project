@@ -21,13 +21,13 @@ const userLogin = (data) =>
             .then((res) => {
               if (res === true) {
                 resolve({
-                  success: 1,
+                  success: true,
                   message: "Successfully Logged In",
                   rows,
                 });
               } else {
                 reject({
-                  success: 0,
+                  success: false,
                   message:
                     "Incorrect username (or) password. Please Try again!",
                 });
@@ -36,7 +36,7 @@ const userLogin = (data) =>
             .catch((err) => console.log("Compare Error : " + err));
         } else {
           reject({
-            success: 0,
+            success: false,
             message: "Incorrect username (or) password. Please Try again!",
           });
         }

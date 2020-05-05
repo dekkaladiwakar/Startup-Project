@@ -1,5 +1,6 @@
 const express = require("express");
 const { genSalt, hash } = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 
 const router = express.Router();
 
@@ -105,7 +106,28 @@ router.post("/login", (req, res) => {
   } else {
     userLogin(req.body)
       .then((data) => {
-        res.status(200).json(data);
+        // JWT Payload
+        const payload = {
+          institute_id: data.rows[0].institute_id,
+          institute_name: data.rows[0].institute_name,
+          institute_principal: data.rows[0].institute_principal,
+          email: data.rows[0].email,
+          education_type: data.rows[0].education_type,
+        };
+
+        // Sign Token
+        jwt.sign(
+          payload,
+          process.env.secretOrKey,
+          { expiresIn: 3600 },
+          (err, token) => {
+            res.json({
+              success: true,
+              message: data.message,
+              token: "Bearer " + token,
+            });
+          }
+        );
       })
       .catch((err) => res.status(400).json(err));
   }
