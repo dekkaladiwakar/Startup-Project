@@ -27,10 +27,11 @@ connection.connect(err => {
 
 app.get("/", (req, res) => {
   conn.getConnection((err, tempCon) => {
-    tempCon.query("SELECT * FROM students", (err, rows, fields) => {
+    tempCon.query("SELECT * FROM parents", (err, rows, fields) => {
       if (err) {
         console.log("Error!");
       } else {
+        console.log("Database connection test success.");
         res.json(rows);
       }
     });

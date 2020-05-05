@@ -1,5 +1,5 @@
 const express = require("express");
-const { genSalt, compare, hash } = require("bcryptjs");
+const { genSalt, hash } = require("bcryptjs");
 
 const router = express.Router();
 
@@ -8,12 +8,13 @@ const conn = require("../../config/connection");
 
 // Load Input Validation
 const validateRegisterInput = require("../../validation/register");
+const validateLoginInput = require("../../validation/login");
 
-// Current Date & Time
-const current_dateTime = new Date();
-const curr_date = current_dateTime.toLocaleDateString();
-const curr_time = current_dateTime.toLocaleTimeString();
+// User Routes
+const userLogin = require("./user_routes/user.login");
+const userRegister = require("./user_routes/user.register");
 
+/*
 // @route   GET api/users
 // @desc    test route
 // @access  Public
@@ -91,11 +92,24 @@ router.post("/registerST", (req, res) => {
     }
   });
 });
+*/
 
-// @route   GET api/users/login
+// @route   POST api/users/login
 // @desc    School Login
 // @access  Public
-router.get("/login", (req, res) => {});
+router.post("/login", (req, res) => {
+  const { errors, isValid } = validateLoginInput(req.body);
+
+  if (!isValid) {
+    res.status(400).json(errors);
+  } else {
+    userLogin(req.body)
+      .then((data) => {
+        res.status(200).json(data);
+      })
+      .catch((err) => res.status(400).json(err));
+  }
+});
 
 // @route   POST api/users/register
 // @desc    School Register
@@ -105,51 +119,13 @@ router.post("/register", (req, res) => {
 
   if (!isValid) {
     return res.status(400).json(errors);
+  } else {
+    userRegister(req.body)
+      .then((data) => {
+        res.status(200).json(data);
+      })
+      .catch((err) => res.status(400).json(err));
   }
-
-  const institute = {
-    institute_id: req.body.institute_id,
-    password: req.body.password,
-    institute_name: req.body.institute_name,
-    institute_principal: req.body.institute_principal,
-    education_type: req.body.education_type,
-    phone_number: req.body.phone_number,
-    address: req.body.address,
-    area: req.body.area,
-    state: req.body.state,
-    city: req.body.city,
-    date_of_creation: curr_date,
-    time_of_creation: curr_time,
-  };
-
-  genSalt(10, (err, salt) => {
-    if (err) {
-      console.log("GenSalt Error : " + err);
-    }
-    hash(institute.password, salt, (err, hash) => {
-      if (err) {
-        console.log("Hash Error : " + err);
-      }
-      institute.password = hash;
-      const instituteJSON = JSON.stringify(institute);
-
-      conn.query(
-        `call insert_management_details(?, @message, @success); select @message, @success`,
-        instituteJSON,
-        (err, rows) => {
-          if (err) {
-            console.log("Procedure Error : " + err);
-          } else {
-            console.log("Procedure executed!");
-            res.json({
-              success: rows[1][0]["@success"],
-              message: rows[1][0]["@message"],
-            });
-          }
-        }
-      );
-    });
-  });
 });
 
 module.exports = router;

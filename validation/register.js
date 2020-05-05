@@ -4,12 +4,16 @@ const isEmpty = require("./is-empty");
 module.exports = validateRegisterInput = (data) => {
   let errors = {};
 
+  // If empty assigning it to empty string
+  // since validator only checks for string types
+
   data.address = !isEmpty(data.address) ? data.address : "";
   data.area = !isEmpty(data.area) ? data.area : "";
   data.city = !isEmpty(data.city) ? data.city : "";
   data.state = !isEmpty(data.state) ? data.state : "";
   data.institute_id = !isEmpty(data.institute_id) ? data.institute_id : "";
   data.password = !isEmpty(data.password) ? data.password : "";
+  data.password2 = !isEmpty(data.password2) ? data.password2 : "";
   data.institute_name = !isEmpty(data.institute_name)
     ? data.institute_name
     : "";
@@ -131,6 +135,6 @@ module.exports = validateRegisterInput = (data) => {
 
   return {
     errors,
-    isValild: isEmpty(errors),
+    isValid: isEmpty(errors),
   };
 };

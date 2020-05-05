@@ -1,3 +1,5 @@
+/*  Password Encryption Testing
+
 const { genSalt, hash, compare } = require("bcryptjs");
 
 const details = { password: "helloworld" };
@@ -21,3 +23,23 @@ genSalt(10, (err, salt) => {
     compare("hello", details.password).then((res) => console.log(res));
   });
 });
+
+*/
+
+const tempFunc = () =>
+  new Promise((resolve, reject) => {
+    const x = 5 * 10;
+    if (x == 50) {
+      resolve({
+        success: 1,
+        message: "Success",
+      });
+    } else {
+      reject({
+        success: 0,
+        message: "Fail",
+      });
+    }
+  });
+
+module.exports = tempFunc;
