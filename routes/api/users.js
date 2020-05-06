@@ -94,6 +94,25 @@ router.post("/registerST", (req, res) => {
   });
 });
 */
+// @route   GET api/users/
+// @desc    Sending index.html File
+// @access  Public
+router.get("/", (req, res) => {
+  res.sendFile("index.html", { root: __dirname + "/../../public/html" });
+});
+
+// @route   GET api/users/register
+// @desc    Sending register.html File
+// @access  Public
+router.get("/register", (req, res) => {
+  res.sendFile("register.html", { root: __dirname + "/../../public/html" });
+});
+// @route   GET api/users/login
+// @desc    Sending login.html File
+// @access  Public
+router.get("/login", (req, res) => {
+  res.sendFile("login.html", { root: __dirname + "/../../public/html" });
+});
 
 // @route   POST api/users/login
 // @desc    School Login
