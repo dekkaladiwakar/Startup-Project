@@ -27,6 +27,9 @@ const userLogin = (data) =>
           // To delete a JSON object
           // obj_name = new Object;
 
+          // Releasing Pool Conneciton
+          tempCon.release();
+
           if (obj[0].status === true) {
             compare(password, obj[1].password)
               .then((res) => {

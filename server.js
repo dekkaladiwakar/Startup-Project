@@ -2,6 +2,7 @@ require("dotenv").config();
 
 const express = require("express");
 const bodyParser = require("body-parser");
+const passport = require("passport");
 
 const users = require("./routes/api/users");
 const insert_data = require("./routes/api/insert_data");
@@ -31,6 +32,7 @@ app.get("/", (req, res) => {
       if (err) {
         console.log("Error!");
       } else {
+        tempCon.release();
         console.log("Database connection test success.");
         res.json(rows);
       }
@@ -38,6 +40,11 @@ app.get("/", (req, res) => {
   });
 });
 
+// Passport middleware
+app.use(passport.initialize());
+
+// Passport config
+require("./config/passport")(passport);
 // Use Routes
 app.use("/api/users", users);
 app.use("/api/insert", insert_data);
