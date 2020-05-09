@@ -127,11 +127,16 @@ router.post("/login", (req, res) => {
       .then((data) => {
         // JWT Payload
         const payload = {
-          institute_id: data.rows[0].institute_id,
-          institute_name: data.rows[0].institute_name,
-          institute_principal: data.rows[0].institute_principal,
-          email: data.rows[0].email,
-          education_type: data.rows[0].education_type,
+          institute_id: data.rows[1].institute_id,
+          institute_name: data.rows[1].institute_name,
+          institute_principal: data.rows[1].institute_principal,
+          email: data.rows[1].email,
+          education_type: data.rows[1].education_type,
+          phone_number: data.rows[1].phone_number,
+          address: data.rows[2].address,
+          area: data.rows[2].area,
+          city: data.rows[2].city,
+          state: data.rows[2].state,
         };
 
         // Sign Token
@@ -141,7 +146,7 @@ router.post("/login", (req, res) => {
           { expiresIn: 3600 },
           (err, token) => {
             res.json({
-              success: true,
+              success: data.rows[0].status,
               message: data.message,
               token: "Bearer " + token,
             });

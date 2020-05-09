@@ -50,7 +50,8 @@ const userRegister = (data) =>
               rows[1][0]["@success"] === 1
                 ? ((result.success = true),
                   (result.message = rows[1][0]["@message"]))
-                : (result.success = false);
+                : ((result.success = false),
+                  (result.message = rows[1][0]["@message"]));
               resolve(result);
             }
           }

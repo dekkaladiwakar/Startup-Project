@@ -27,7 +27,8 @@ module.exports = validateRegisterInput = (data) => {
   data.phone_number = !isEmpty(data.phone_number) ? data.phone_number : "";
 
   if (!validator.isLength(data.address, { min: 5, max: 250 })) {
-    errors.address = "Address can't exceed 250 characters, min = 5.";
+    errors.address =
+      "Address can't exceed 250 characters, minimum characters = 5.";
   }
 
   if (validator.isEmpty(data.address)) {
@@ -35,7 +36,7 @@ module.exports = validateRegisterInput = (data) => {
   }
 
   if (!validator.isLength(data.area, { min: 3, max: 40 })) {
-    errors.area = "Area can't exceed 40 characters, min = 3.";
+    errors.area = "Area can't exceed 40 characters, minimum characters = 3.";
   }
 
   if (validator.isEmpty(data.area)) {
@@ -43,7 +44,7 @@ module.exports = validateRegisterInput = (data) => {
   }
 
   if (!validator.isLength(data.city, { min: 3, max: 20 })) {
-    errors.city = "City can't exceed 20 characters, min = 3.";
+    errors.city = "City can't exceed 20 characters, minimum characters = 3.";
   }
 
   if (validator.isEmpty(data.city)) {
@@ -51,7 +52,7 @@ module.exports = validateRegisterInput = (data) => {
   }
 
   if (!validator.isLength(data.state, { min: 3, max: 30 })) {
-    errors.state = "State can't exceed 30 characters, min = 3.";
+    errors.state = "State can't exceed 30 characters, minimum characters = 3.";
   }
 
   if (validator.isEmpty(data.state)) {
@@ -88,7 +89,8 @@ module.exports = validateRegisterInput = (data) => {
   }
 
   if (!validator.isLength(data.institute_name, { min: 6, max: 50 })) {
-    errors.institute_name = "School name can't exceed 50 characters, min = 6.";
+    errors.institute_name =
+      "School name can't exceed 50 characters, minimum characters = 6.";
   }
 
   if (validator.isEmpty(data.institute_name)) {
@@ -97,7 +99,7 @@ module.exports = validateRegisterInput = (data) => {
 
   if (!validator.isLength(data.institute_principal, { min: 5, max: 30 })) {
     errors.institute_principal =
-      "Principal name can't exceed 30 characters, min = 5.";
+      "Principal name can't exceed 30 characters, minimum characters = 5.";
   }
 
   if (validator.isEmpty(data.institute_principal)) {
@@ -105,7 +107,7 @@ module.exports = validateRegisterInput = (data) => {
   }
 
   if (!validator.isLength(data.email, { min: 5, max: 40 })) {
-    errors.email = "Email can't exceed 40 characters, min = 5.";
+    errors.email = "Email can't exceed 40 characters, minimum characters = 5.";
   }
 
   if (!validator.isEmail(data.email)) {
@@ -118,7 +120,7 @@ module.exports = validateRegisterInput = (data) => {
 
   if (!validator.isLength(data.education_type, { min: 6, max: 30 })) {
     errors.education_type =
-      "Education Type can't exceed 30 characters, min = 6.";
+      "Education Type can't exceed 30 characters, minimum characters = 6.";
   }
 
   if (validator.isEmpty(data.education_type)) {
@@ -126,7 +128,8 @@ module.exports = validateRegisterInput = (data) => {
   }
 
   if (!validator.isLength(data.phone_number, { min: 7, max: 20 })) {
-    errors.phone_number = "Phone Number can't exceed 20 characters, min = 7.";
+    errors.phone_number =
+      "Phone Number can't exceed 20 characters, minimum characters = 7.";
   }
 
   if (validator.isEmpty(data.phone_number)) {
