@@ -6,11 +6,13 @@ const passport = require("passport");
 
 const users = require("./routes/api/users");
 const insert_data = require("./routes/api/insert_data");
-const management = require("./routes/api/management");
+const dashboard = require("./routes/api/private/dashboard");
 
 const conn = require("./config/connection");
 
 const app = express();
+
+app.use(express.static(__dirname + "/public"));
 
 // Body Parser
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -27,7 +29,7 @@ connection.connect(err => {
 */
 
 app.get("/", (req, res) => {
-  conn.getConnection((err, tempCon) => {
+  /*conn.getConnection((err, tempCon) => {
     tempCon.query("SELECT * FROM parents", (err, rows, fields) => {
       if (err) {
         console.log("Error!");
@@ -37,7 +39,8 @@ app.get("/", (req, res) => {
         res.json(rows);
       }
     });
-  });
+  });*/
+  res.sendFile("landing.html", { root: __dirname + "/./public/html" });
 });
 
 // Passport middleware
@@ -48,7 +51,7 @@ require("./config/passport")(passport);
 // Use Routes
 app.use("/api/users", users);
 app.use("/api/insert", insert_data);
-app.use("/api/management", management);
+app.use("/api/private/dashboard", dashboard);
 
 const port = process.env.PORT || process.env.USER_PORT;
 

@@ -175,14 +175,4 @@ router.post("/register", (req, res) => {
   }
 });
 
-// @route   POST api/users/current
-// @desc    Return current user
-// @access  Private
-router.get(
-  "/current",
-  passport.authenticate("jwt", { session: false }),
-  (req, res) => {
-    res.json(req.user);
-  }
-);
 module.exports = router;

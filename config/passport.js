@@ -16,6 +16,8 @@ module.exports = (passport) => {
           if (err) {
             console.log("Passport Error : " + err);
           } else if (Object.keys(rows).length != 0) {
+            // return value (jwt_payload) is stored in -> 'user' and can be accessed by -> req.user;
+            // req.user -> user is the default return parameter name assigned by passport.
             return done(null, jwt_payload);
           } else {
             return done(null, false);
