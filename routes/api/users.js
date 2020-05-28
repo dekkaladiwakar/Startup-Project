@@ -1,7 +1,5 @@
 const express = require("express");
-const { genSalt, hash } = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const passport = require("passport");
 
 const router = express.Router();
 
@@ -16,85 +14,6 @@ const validateLoginInput = require("../../validation/login");
 const userLogin = require("./user_routes/user.login");
 const userRegister = require("./user_routes/user.register");
 
-/*
-// @route   GET api/users
-// @desc    test route
-// @access  Public
-router.get("/", (req, res) => {
-  conn.getConnection((err, tempCon) => {
-    tempCon.query("CALL TestProcedureOne()", (err, rows, fields) => {
-      tempCon.release();
-      if (err) {
-        console.log("Error!" + err);
-      } else {
-        console.log(rows);
-        res.json(rows);
-      }
-    });
-  });
-});
-
-// @route   POST api/registerST
-// @desc    register student and teacher
-// @access  Private
-
-router.post("/registerST", (req, res) => {
-  const person = {
-    first_name: req.body.first_name,
-    middle_name: req.body.middle_name,
-    last_name: req.body.last_name,
-    gender: req.body.gender,
-    dob: req.body.dob,
-    phone_number: req.body.phone_number,
-    date_of_creation: curr_date,
-    time_of_creation: curr_time,
-  };
-
-  const parent = {
-    first_name: req.body.p_first_name,
-    middle_name: req.body.p_middle_name,
-    last_name: req.body.p_last_name,
-    gender: req.body.p_gender,
-    dob: req.body.p_dob,
-    phone_number: req.body.p_phone_number,
-    date_of_creation: curr_date,
-    time_of_creation: curr_time,
-  };
-
-  const person_type = req.body.person_type;
-
-  // MYSQL Query Statements
-  const insert_query_student = "INSERT INTO students SET ?";
-  const insert_query_parents = "INSERT INTO parents SET ?";
-  const insert_query_teacher = "INSERT INTO teachers SET ?";
-
-  conn.getConnection((err, tempCon) => {
-    if (err) {
-      console.log("Connection Error -> " + err);
-    }
-
-    if (person_type === "student") {
-      tempCon.query(insert_query_student, person, (err, rows) => {
-        if (err) {
-          console.log("Query Error -> " + err);
-        } else {
-          console.log("Student Query Successfully Inserted!");
-          res.json({ row: rows });
-        }
-      });
-    } else if (person_type === "teacher") {
-      tempCon.query(insert_query_teacher, person, (err, rows) => {
-        if (err) {
-          console.log("Query Error -> " + err);
-        } else {
-          console.log("Teacher Query Successfully Inserted!");
-          res.json({ row: rows });
-        }
-      });
-    }
-  });
-});
-*/
 // @route   GET api/users/
 // @desc    Sending index.html File
 // @access  Public
@@ -135,7 +54,7 @@ router.post("/login", (req, res) => {
           education_type: data.rows[1].education_type,
           phone_number: data.rows[1].phone_number,
           address: data.rows[2].address,
-          area: data.rows[2].area,
+          pincode: data.rows[2].pincode,
           city: data.rows[2].city,
           state: data.rows[2].state,
         };

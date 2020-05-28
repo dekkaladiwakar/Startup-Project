@@ -13,10 +13,11 @@ const userRegister = (data) =>
       password: data.password,
       institute_name: data.institute_name,
       institute_principal: data.institute_principal,
+      email: data.email,
       education_type: data.education_type,
       phone_number: data.phone_number,
       address: data.address,
-      area: data.area,
+      pincode: data.pincode,
       state: data.state,
       city: data.city,
       date_of_creation: curr_date,
@@ -31,6 +32,8 @@ const userRegister = (data) =>
           console.log("Hash Error : " + err);
         }
         institute.password = hash;
+
+        // Need to be converted into JSON String for DB to consider it as JSON object
         const instituteJSON = JSON.stringify(institute);
 
         conn.query(
@@ -44,7 +47,7 @@ const userRegister = (data) =>
                 message: "Unexpected Error. Sorry for the inconvenience.",
               });
             } else {
-              console.log("Procedure executed!");
+              console.log("Insert_Managemet_Details Procedure executed!");
               const result = { success: "", message: "" };
 
               rows[1][0]["@success"] === 1

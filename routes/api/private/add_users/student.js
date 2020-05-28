@@ -1,13 +1,30 @@
 const conn = require("../../../../config/connection");
-const bcryptjs = require("bcryptjs");
 
-const insert_query = "";
-const addStudent = (data = new Promise((resolve, reject) => {
-  conn.getConnection((err, tempCon) => {
-    if (err) {
-      console.log("Connection Error : " + err);
-    }
+const addStudent = (data) =>
+  new Promise((resolve, reject) => {
+    conn.query(
+      `CALL add_students(?, @message, @result); SELECT @message, @result;`,
+      data,
+      (err, rows) => {
+        if (err) {
+          console.log("Procedure Error : " + err);
+          reject({
+            success: false,
+            message: "Unexpected Error. Sorry for the inconvenience.",
+          });
+        } else {
+          console.log("Add_Students Procedure Executed.");
+          const result = { success: "", message: "" };
 
-    tempCon.query();
+          rows[1][0]["@result"] === 1
+            ? ((result.success = true),
+              (result.message = rows[1][0]["@message"]))
+            : ((result.success = false),
+              (result.message = rows[1][0]["@message"]));
+          resolve(result);
+        }
+      }
+    );
   });
-}));
+
+module.exports = addStudent;

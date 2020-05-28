@@ -8,7 +8,7 @@ module.exports = validateRegisterInput = (data) => {
   // since validator only checks for string types
 
   data.address = !isEmpty(data.address) ? data.address : "";
-  data.area = !isEmpty(data.area) ? data.area : "";
+  data.pincode = !isEmpty(data.pinode) ? data.pincode : "";
   data.city = !isEmpty(data.city) ? data.city : "";
   data.state = !isEmpty(data.state) ? data.state : "";
   data.institute_id = !isEmpty(data.institute_id) ? data.institute_id : "";
@@ -35,12 +35,13 @@ module.exports = validateRegisterInput = (data) => {
     errors.address = "Address is required.";
   }
 
-  if (!validator.isLength(data.area, { min: 3, max: 40 })) {
-    errors.area = "Area can't exceed 40 characters, minimum characters = 3.";
+  if (!validator.isLength(data.pincode, { min: 6, max: 10 })) {
+    errors.pincode =
+      "Pincode can't exceed 10 characters, minimum characters = 6.";
   }
 
-  if (validator.isEmpty(data.area)) {
-    errors.area = "Area is required.";
+  if (validator.isEmpty(data.pincode)) {
+    errors.pincode = "Pincode is required.";
   }
 
   if (!validator.isLength(data.city, { min: 3, max: 20 })) {

@@ -1,6 +1,4 @@
 /node_modules
 package-lock.json
 .env
-test2.js
-test.js
-test3.js
+/test
