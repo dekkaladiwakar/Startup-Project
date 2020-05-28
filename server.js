@@ -29,15 +29,15 @@ connection.connect(err => {
 */
 
 app.get("/", (req, res) => {
-  conn.query("SELECT * from institutes", (err, rows, fields) => {
+  /* conn.query("SELECT * from institutes", (err, rows, fields) => {
     if (err) {
       console.log("Error!");
     } else {
       console.log("Database connection test success.");
       res.status(200).json(rows);
     }
-  });
-  //res.sendFile("landing.html", { root: __dirname + "/./public/html" });
+  }); */
+  res.sendFile("main.html", { root: __dirname + "/./public/html" });
 });
 
 // Passport middleware
