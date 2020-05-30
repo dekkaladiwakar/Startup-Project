@@ -1,18 +1,23 @@
 const express = require("express");
-const router = express.Router();
 const passport = require("passport");
 
+// Database connection
 const conn = require("../../../config/connection");
-const addStudent = require("./add_users/student");
+
+// Custom routes
+const addStudent = require("./students/add_student");
 
 // Validation File
 const validateStudentInput = require("../../../validation/private-route-validation/validate_student");
+
+const router = express.Router();
+
 // Current Date & Time
 const current_dateTime = new Date();
 const curr_date = current_dateTime.toLocaleDateString();
 const curr_time = current_dateTime.toLocaleTimeString();
 
-// @route   POST api/private/dashboard
+// @route   GET api/u/dashboard
 // @desc    Return current user (Test Route)
 // @access  Private
 router.get(
@@ -24,7 +29,7 @@ router.get(
   }
 );
 
-// @route   GET api/private/dashboard/profile
+// @route   GET api/u/dashboard/profile
 // @desc    Get current user profile
 // @access  Private
 router.get(
@@ -51,7 +56,7 @@ router.get(
   }
 );
 
-// @route   POST api/private/dashboard/add_student
+// @route   POST api/u/dashboard/add_student
 // @desc    Add student details
 // @access  Private
 router.post(

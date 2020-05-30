@@ -8,7 +8,7 @@ module.exports = validateRegisterInput = (data) => {
   // since validator only checks for string types
 
   data.address = !isEmpty(data.address) ? data.address : "";
-  data.pincode = !isEmpty(data.pinode) ? data.pincode : "";
+  data.pincode = !isEmpty(data.pincode) ? data.pincode : "";
   data.city = !isEmpty(data.city) ? data.city : "";
   data.state = !isEmpty(data.state) ? data.state : "";
   data.institute_id = !isEmpty(data.institute_id) ? data.institute_id : "";
