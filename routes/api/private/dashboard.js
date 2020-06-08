@@ -4,18 +4,7 @@ const passport = require("passport");
 // Database connection
 const conn = require("../../../config/connection");
 
-// Custom routes
-const addStudent = require("./students/add_student");
-
-// Validation File
-const validateStudentInput = require("../../../validation/private-route-validation/validate_student");
-
 const router = express.Router();
-
-// Current Date & Time
-const current_dateTime = new Date();
-const curr_date = current_dateTime.toLocaleDateString();
-const curr_time = current_dateTime.toLocaleTimeString();
 
 // @route   GET api/u/dashboard
 // @desc    Return current user (Test Route)
@@ -56,6 +45,9 @@ router.get(
   }
 );
 
+/* 
+Transfered to index.js in students folder
+
 // @route   POST api/u/dashboard/add_student
 // @desc    Add student details
 // @access  Private
@@ -89,5 +81,7 @@ router.post(
         .catch((err) => res.status(400).json(err));
     }
   }
-);
+); 
+*/
+
 module.exports = router;

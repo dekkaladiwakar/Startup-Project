@@ -6,7 +6,8 @@ const passport = require("passport");
 
 const users = require("./routes/api/users");
 const dashboard = require("./routes/api/private/dashboard");
-const section = require("./routes/api/private/classes/section");
+const classes = require("./routes/api/private/classes/index");
+const students = require("./routes/api/private/students/index");
 const teachers = require("./routes/api/private/teachers/index");
 
 const app = express();
@@ -34,8 +35,9 @@ require("./config/passport")(passport);
 // Use Routes
 app.use("/api/users", users);
 app.use("/api/u/dashboard", dashboard);
-app.use("/api/u/classes", section);
-app.use("/api/u/teachers", teachers);
+app.use("/api/u/classes", classes);
+app.use("/api/u/classes/students", students);
+app.use("/api/u/classes/teachers", teachers);
 
 const port = process.env.PORT || process.env.USER_PORT;
 
