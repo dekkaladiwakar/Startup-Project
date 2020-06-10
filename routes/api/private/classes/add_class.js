@@ -1,6 +1,6 @@
 const conn = require("../../../../config/connection");
 
-module.exports = addClass = (data) => {
+module.exports = addClass = (data) =>
   new Promise((resolve, reject) => {
     conn.query(
       "CALL add_classes(?, @message, @result); SELECT @message, @result;",
@@ -26,4 +26,3 @@ module.exports = addClass = (data) => {
       }
     );
   });
-};

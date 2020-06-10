@@ -12,6 +12,11 @@ const addStudent = require("./add_student");
 // Validation
 const validateStudentInput = require("../../../../validation/private-route-validation/validate_student");
 
+// Current Date & Time
+const current_dateTime = new Date();
+const curr_date = current_dateTime.toLocaleDateString();
+const curr_time = current_dateTime.toLocaleTimeString();
+
 // @route   GET /api/u/students
 // @desc    Students's page
 // @access  Private
@@ -31,7 +36,7 @@ router.get(
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     conn.query(
-      "SELECT * FROM students WHERE institute_id = ?",
+      "SELECT students.full_name FROM students INNER JOIN student_institutes ON student_institutes.student_id = students.student_id WHERE student_institutes.institute_id = ?;",
       req.user.institute_id,
       (err, rows) => {
         if (err) console.log("Query Error : " + err);

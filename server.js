@@ -4,11 +4,14 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const passport = require("passport");
 
+// Custom Routes
 const users = require("./routes/api/users");
 const dashboard = require("./routes/api/private/dashboard");
 const classes = require("./routes/api/private/classes/index");
 const students = require("./routes/api/private/students/index");
 const teachers = require("./routes/api/private/teachers/index");
+const announcements = require("./routes/api/private/anouncements/index");
+const attendence = require("./routes/api/private/attendence");
 
 const app = express();
 
@@ -37,7 +40,9 @@ app.use("/api/users", users);
 app.use("/api/u/dashboard", dashboard);
 app.use("/api/u/classes", classes);
 app.use("/api/u/classes/students", students);
-app.use("/api/u/classes/teachers", teachers);
+app.use("/api/u/teachers", teachers);
+app.use("/api/u/announcements", announcements);
+app.use("/api/u/attendence", attendence);
 
 const port = process.env.PORT || process.env.USER_PORT;
 

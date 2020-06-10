@@ -12,6 +12,11 @@ const addTeacher = require("./add_teacher");
 // Validation
 const validateTeacherInput = require("../../../../validation/private-route-validation/validate_teacher");
 
+// Current Date & Time
+const current_dateTime = new Date();
+const curr_date = current_dateTime.toLocaleDateString();
+const curr_time = current_dateTime.toLocaleTimeString();
+
 // @route   GET /api/u/teachers
 // @desc    Teacher's page
 // @access  Private
@@ -30,10 +35,14 @@ router.get(
   "/all",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    conn.query("SELECT * FROM teachers", (err, rows) => {
-      if (err) console.log("Query Error : " + err);
-      else res.status(200).json(rows);
-    });
+    conn.query(
+      "SELECT teachers.full_name FROM teachers INNER JOIN teacher_institutes ON teacher_institutes.teacher_id = teachers.teacher_id WHERE teacher_institutes.institute_id = ?;",
+      req.user.institute_id,
+      (err, rows) => {
+        if (err) console.log("Query Error : " + err);
+        else res.status(200).json(rows);
+      }
+    );
   }
 );
 
