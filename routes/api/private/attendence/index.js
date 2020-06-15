@@ -24,11 +24,27 @@ router.get(
   "/all",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    conn.query("SELECT * FROM attendence", (err, rows) => {
-      if (err) console.log("Query Error : ", err);
-      else res.status(200).json(rows);
-    });
+    const institute_id = req.user.institute_id;
+    const class_id = req.body.class_id;
+
+    conn.query(
+      "SELECT * FROM attendence WHERE institute_id = ? AND class_id = ?",
+      (institute_id, class_id),
+      (err, rows) => {
+        if (err) console.log("Query Error : ", err);
+        else res.status(200).json(rows);
+      }
+    );
   }
+);
+
+// @route   POST /api/u/attendence/add
+// @desc    Attendence Page
+// @access  Private
+router.post(
+  "/add",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {}
 );
 
 module.exports = router;

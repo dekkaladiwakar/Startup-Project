@@ -9,10 +9,13 @@ const conn = require("../../config/connection");
 // Load Input Validation
 const validateRegisterInput = require("../../validation/register");
 const validateLoginInput = require("../../validation/login");
+const validateTeacherLoginInput = require("../../validation/teacherLogin");
 
 // User Routes
-const userLogin = require("./user_routes/user.login");
-const userRegister = require("./user_routes/user.register");
+const managementLogin = require("./user_routes/management.login");
+const managementRegister = require("./user_routes/management.register");
+const teacherLogin = require("./user_routes/teacher.login");
+const passport = require("passport");
 
 // @route   GET api/users/
 // @desc    Sending index.html File
@@ -43,7 +46,7 @@ router.post("/login", (req, res) => {
   if (!isValid) {
     res.status(400).json(errors);
   } else {
-    userLogin(req.body)
+    managementLogin(req.body)
       .then((data) => {
         // JWT Payload
         const payload = {
@@ -77,6 +80,48 @@ router.post("/login", (req, res) => {
   }
 });
 
+// @route   POST api/users/teacherlogin
+// @desc    Teacher Login
+// @access  Public
+router.post("/teacherLogin", (req, res) => {
+  const { errors, isValid } = validateTeacherLoginInput(req.body);
+
+  if (!isValid) {
+    res.status(400).json(errors);
+  } else {
+    teacherLogin(req.body)
+      .then((data) => {
+        // JWT Payload
+        const payload = {
+          teacher_id: data.rows[1].teacher_id,
+          full_name: data.rows[1].full_name,
+          email: data.rows[1].email,
+          phone_number: data.rows[1].phone_number,
+          date_of_creation: data.rows[1].date_of_creation,
+          time_of_creation: data.rows[1].time_of_creation,
+          institute_id: data.rows[2].institute_id,
+          date_from: data.rows[2].date_from,
+          date_to: data.rows[2].date_to,
+        };
+
+        // Sign Token
+        jwt.sign(
+          payload,
+          process.env.secretOrKey,
+          { expiresIn: 3600 },
+          (err, token) => {
+            res.json({
+              success: data.rows[0].status,
+              message: data.message,
+              token: "Bearer " + token,
+            });
+          }
+        );
+      })
+      .catch((err) => res.status(400).json(err));
+  }
+});
+
 // @route   POST api/users/register
 // @desc    School Register
 // @access  Public
@@ -86,12 +131,23 @@ router.post("/register", (req, res) => {
   if (!isValid) {
     return res.status(400).json(errors);
   } else {
-    userRegister(req.body)
+    managementRegister(req.body)
       .then((data) => {
         res.status(200).json(data);
       })
       .catch((err) => res.status(400).json(err));
   }
 });
+
+// @route   POST api/users/checkToken
+// @desc    Cheking payload (Test Route)
+// @access  Private
+router.get(
+  "/checkToken",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    res.status(200).json(req.user);
+  }
+);
 
 module.exports = router;

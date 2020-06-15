@@ -6,7 +6,7 @@ const current_dateTime = new Date();
 const curr_date = current_dateTime.toLocaleDateString();
 const curr_time = current_dateTime.toLocaleTimeString();
 
-const userRegister = (data) =>
+const managemenetRegister = (data) =>
   new Promise((resolve, reject) => {
     const institute = {
       institute_id: data.institute_id,
@@ -63,4 +63,4 @@ const userRegister = (data) =>
     });
   });
 
-module.exports = userRegister;
+module.exports = managemenetRegister;

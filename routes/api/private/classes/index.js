@@ -55,7 +55,7 @@ router.post(
     } else {
       const class_details = {
         institute_id: req.user.institute_id,
-        teacher_id: req.body.teacher_id,
+        teacher_id: req.body.homeroom_teacher_id,
         class_name: req.body.class_name,
         section_name: req.body.section_name,
       };

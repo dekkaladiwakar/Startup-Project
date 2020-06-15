@@ -1,17 +1,21 @@
-const conn = require(".././../../config/connection");
+const conn = require("../../../config/connection");
 const { compare } = require("bcryptjs");
 
-const userLogin = (data) =>
+const managementLogin = (data) =>
   new Promise((resolve, reject) => {
     const institute_id = data.institute_id;
     const password = data.password;
 
     conn.query(
-      "CALL find_institute_id(?, @result); select @result",
+      "CALL management_login(?, @result); select @result",
       institute_id,
-      (err, rows, fields) => {
+      (err, rows) => {
         if (err) {
           console.log("Query Error : " + err);
+          reject({
+            success: false,
+            message: "Incorrect username (or) password. Please Try again!",
+          });
         }
         // Setting Obj to data recieved from Mysql procedure excluding OkPacket Row.
         let obj = JSON.parse(rows[1][0]["@result"]);
@@ -53,4 +57,4 @@ const userLogin = (data) =>
     );
   });
 
-module.exports = userLogin;
+module.exports = managementLogin;
