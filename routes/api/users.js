@@ -1,10 +1,8 @@
 const express = require("express");
 const jwt = require("jsonwebtoken");
+const passport = require("passport");
 
 const router = express.Router();
-
-// Load DB Connection
-const conn = require("../../config/connection");
 
 // Load Input Validation
 const validateRegisterInput = require("../../validation/register");
@@ -15,7 +13,6 @@ const validateTeacherLoginInput = require("../../validation/teacherLogin");
 const managementLogin = require("./user_routes/management.login");
 const managementRegister = require("./user_routes/management.register");
 const teacherLogin = require("./user_routes/teacher.login");
-const passport = require("passport");
 
 // @route   GET api/users/
 // @desc    Sending index.html File
@@ -139,7 +136,7 @@ router.post("/register", (req, res) => {
   }
 });
 
-// @route   POST api/users/checkToken
+// @route   GET api/users/checkToken
 // @desc    Cheking payload (Test Route)
 // @access  Private
 router.get(

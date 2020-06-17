@@ -79,4 +79,13 @@ router.post(
   }
 );
 
+// @route   DELETE /api/u/teachers/add
+// @desc    remove teachers
+// @access  Private
+router.delete(
+  "/remove",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {}
+);
+
 module.exports = router;
