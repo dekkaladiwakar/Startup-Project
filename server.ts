@@ -1,8 +1,8 @@
 require("dotenv").config();
 
-const express = require("express");
-const bodyParser = require("body-parser");
-const passport = require("passport");
+import express from "express";
+import bodyParser from "body-parser";
+import passport from "passport";
 
 // Custom Routes
 const users = require("./routes/api/users");
@@ -53,6 +53,6 @@ app.use("/api/u/exams", exams);
 const port = process.env.PORT || process.env.USER_PORT;
 
 // Incoming requests listener
-app.listen(port, (req, res) => {
+app.listen(port, () => {
   console.log(`The server is running on port ${port}......`);
 });
