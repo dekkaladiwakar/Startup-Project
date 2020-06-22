@@ -1,12 +1,13 @@
-const { compare } = require("bcryptjs");
+import { compare } from "bcryptjs";
+import { Pool } from "mysql";
 
 // Custom Routes
 const setNewPassword = require("./setNewPassword");
 
 // DB Connection
-const conn = require("../../../config/connection");
+const conn: Pool = require("../../../config/connection");
 
-const teacherLogin = (data) =>
+const teacherLogin = (data: { login_id: string; password: string }) =>
   new Promise((resolve, reject) => {
     const login_id = data.login_id;
     const password = data.password;
@@ -40,7 +41,7 @@ const teacherLogin = (data) =>
         if (obj[0].status === true && checkPassword === null) {
           console.log("New user!");
           setNewPassword(password)
-            .then((data) => {
+            .then((data: {}) => {
               conn.query(
                 "UPDATE teachers SET password = ? WHERE teacher_id = ?",
                 [data, obj[1].teacher_id],
@@ -63,7 +64,7 @@ const teacherLogin = (data) =>
                 }
               );
             })
-            .catch((err) => {
+            .catch((err: Error) => {
               console.log("SetNewPassword Error : ", err);
               reject(err);
             });
@@ -87,7 +88,7 @@ const teacherLogin = (data) =>
                   });
                 }
               })
-              .catch((err) => {
+              .catch((err: Error) => {
                 console.log("Compare Error : " + err);
                 reject({
                   success: false,

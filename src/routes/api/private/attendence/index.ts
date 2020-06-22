@@ -1,10 +1,11 @@
-const express = require("express");
-const passport = require("passport");
+import express from "express";
+import passport from "passport";
+import { Pool } from "mysql";
 
 const router = express.Router();
 
 // DB Connection
-const conn = require("../../../../config/connection");
+const conn: Pool = require("../../../../config/connection");
 
 // @route   GET /api/u/attendence
 // @desc    Attendence Page
@@ -24,12 +25,13 @@ router.get(
   "/all",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
+    //@ts-expect-error
     const institute_id = req.user.institute_id;
     const class_id = req.body.class_id;
 
     conn.query(
       "SELECT * FROM attendence WHERE institute_id = ? AND class_id = ?",
-      (institute_id, class_id),
+      [institute_id, class_id],
       (err, rows) => {
         if (err) console.log("Query Error : ", err);
         else res.status(200).json(rows);

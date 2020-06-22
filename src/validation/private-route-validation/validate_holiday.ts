@@ -1,8 +1,9 @@
-const validator = require("validator");
+import validator from "validator";
+
 const isEmpty = require("../is-empty");
 
-module.exports = validateHoliday = (data) => {
-  let errors = {};
+const validateHoliday = (data: any) => {
+  let errors: any = {};
 
   data.reason = !isEmpty(data.reason) ? data.reason : "";
   data.date_of_holiday_from = !isEmpty(data.date_of_holiday_from)
@@ -23,18 +24,20 @@ module.exports = validateHoliday = (data) => {
   if (
     !validator.isISO8601(
       data.date_of_holiday_from,
+      // @ts-expect-error
       (options = { strict: true })
     )
   ) {
     errors.date_of_holiday_from = "Invalid Date (or) Format. **(YYYY-MM-DD)";
   }
 
-  if (validator.isEmpty(date_of_holiday_from)) {
+  if (validator.isEmpty(data.date_of_holiday_from)) {
     errors.date_of_holiday_from = "Date Required.";
   }
 
   if (
-    !validator.isEmpty(date.date_of_holiday_to) &&
+    !validator.isEmpty(data.date_of_holiday_to) &&
+    // @ts-expect-error
     !validator.isISO8601(data.date_of_holiday_to, (options = { strict: true }))
   ) {
     errors.date_of_holiday_to = "Invalid Date (or) Format. **(YYYY-MM-DD)";
@@ -44,3 +47,5 @@ module.exports = validateHoliday = (data) => {
     isValid: isEmpty(errors),
   };
 };
+
+module.exports = validateHoliday;

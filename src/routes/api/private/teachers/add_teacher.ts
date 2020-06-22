@@ -1,20 +1,22 @@
-const conn = require("../../../../config/connection");
+import { Pool } from "mysql";
 
-module.exports = addClass = (data) =>
+const conn: Pool = require("../../../../config/connection");
+
+const addTeacher = (data: {}) =>
   new Promise((resolve, reject) => {
     conn.query(
-      "CALL add_classes(?, @message, @result); SELECT @message, @result;",
+      "CALL add_teachers(?, @message, @result); SELECT @message, @result;",
       data,
       (err, rows) => {
         if (err) {
-          console.log("Query Error : ", err);
+          console.log("Query Error : " + err);
           reject({
             success: false,
             message: "Unexpected Error. Sorry for the inconvenience.",
           });
         } else {
-          console.log("Add_Classes Procedure Executed.");
-          const result = { success: "", message: "" };
+          console.log("Add_Teachers Procedure Executed.");
+          const result = { success: Boolean.prototype, message: "" };
 
           rows[1][0]["@result"] === 1
             ? ((result.success = true),
@@ -26,3 +28,5 @@ module.exports = addClass = (data) =>
       }
     );
   });
+
+module.exports = addTeacher;

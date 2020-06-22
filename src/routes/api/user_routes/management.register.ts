@@ -1,12 +1,27 @@
-const conn = require("../../../config/connection");
-const { genSalt, hash } = require("bcryptjs");
+import { genSalt, hash } from "bcryptjs";
+import { Pool } from "mysql";
+
+// DB Connection
+const conn: Pool = require("../../../config/connection");
 
 // Current Date & Time
 const current_dateTime = new Date();
 const curr_date = current_dateTime.toLocaleDateString();
 const curr_time = current_dateTime.toLocaleTimeString();
 
-const managemenetRegister = (data) =>
+const managemenetRegister = (data: {
+  institute_id: string;
+  password: string;
+  institute_name: string;
+  institute_principal: string;
+  email: string;
+  education_type: string;
+  phone_number: string;
+  address: string;
+  pincode: string;
+  city: string;
+  state: string;
+}) =>
   new Promise((resolve, reject) => {
     const institute = {
       institute_id: data.institute_id,
@@ -48,7 +63,7 @@ const managemenetRegister = (data) =>
               });
             } else {
               console.log("Insert_Managemet_Details Procedure executed!");
-              const result = { success: "", message: "" };
+              const result = { success: Boolean.prototype, message: "" };
 
               rows[1][0]["@success"] === 1
                 ? ((result.success = true),

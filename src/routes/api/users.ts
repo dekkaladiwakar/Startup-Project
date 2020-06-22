@@ -28,7 +28,7 @@ router.get("/", (req, res) => {
 // @desc    Sending register.html File
 // @access  Public
 router.get("/register", (req, res) => {
-  res.sendfile("register.html", { root: __dirname + "/../../public/html" });
+  res.sendFile("register.html", { root: __dirname + "/../../public/html" });
 });
 // @route   GET api/users/login
 // @desc    Sending login.html File

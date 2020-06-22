@@ -1,8 +1,8 @@
-const validator = require("validator");
+import validator from "validator";
 const isEmpty = require("./is-empty");
 
-module.exports = validateLoginInput = (data) => {
-  let errors = {};
+const validateLoginInput = (data: any) => {
+  let errors: any = {};
 
   data.institute_id = !isEmpty(data.institute_id) ? data.institute_id : "";
   data.password = !isEmpty(data.password) ? data.password : "";
@@ -28,3 +28,5 @@ module.exports = validateLoginInput = (data) => {
     isValid: isEmpty(errors),
   };
 };
+
+module.exports = validateLoginInput;

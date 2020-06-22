@@ -1,7 +1,9 @@
-const conn = require("../../../config/connection");
-const { compare } = require("bcryptjs");
+import { compare } from "bcryptjs";
+import { Pool } from "mysql";
 
-const managementLogin = (data) =>
+const conn: Pool = require("../../../config/connection");
+
+const managementLogin = (data: { institute_id: string; password: string }) =>
   new Promise((resolve, reject) => {
     const institute_id = data.institute_id;
     const password = data.password;

@@ -1,10 +1,11 @@
-const express = require("express");
-const passport = require("passport");
+import express from "express";
+import passport from "passport";
+import { Pool } from "mysql";
 
 const router = express.Router();
 
 // DB Connection
-const conn = require("../../../../config/connection");
+const conn: Pool = require("../../../../config/connection");
 
 // Custom routes
 const addClass = require("./add_class");
@@ -32,6 +33,7 @@ router.get(
   (req, res) => {
     conn.query(
       "SELECT class_name, section_name FROM classes WHERE institute_id = ?",
+      // @ts-expect-error
       req.user.institute_id,
       (err, rows) => {
         if (err) console.log("Query Error : " + err);
@@ -54,7 +56,9 @@ router.post(
       res.status(400).json(errors);
     } else {
       const class_details = {
+        //@ts-expect-error
         institute_id: req.user.institute_id,
+        //@ts-expect-error
         teacher_id: req.user.homeroom_teacher_id,
         class_name: req.body.class_name,
         section_name: req.body.section_name,
@@ -64,8 +68,8 @@ router.post(
       const classJSON = JSON.stringify(class_details);
 
       addClass(classJSON)
-        .then((data) => res.status(200).json(data))
-        .catch((err) => res.status(400).json(err));
+        .then((data: {}) => res.status(200).json(data))
+        .catch((err: Error) => res.status(400).json(err));
     }
   }
 );

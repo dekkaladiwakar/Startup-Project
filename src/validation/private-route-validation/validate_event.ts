@@ -1,8 +1,9 @@
-const validator = require("validator");
+import validator from "validator";
+
 const isEmpty = require("../is-empty");
 
-module.exports = validateEvent = (data) => {
-  let errors = {};
+const validateEvent = (data: any) => {
+  let errors: any = {};
 
   data.reason = !isEmpty(data.reason) ? data.reason : "";
   data.date_of_event_from = !isEmpty(data.date_of_event_from)
@@ -21,17 +22,19 @@ module.exports = validateEvent = (data) => {
   }
 
   if (
+    // @ts-expect-error
     !validator.isISO8601(data.date_of_event_from, (options = { strict: true }))
   ) {
     errors.date_of_event_from = "Invalid Date (or) Format. **(YYYY-MM-DD)";
   }
 
-  if (validator.isEmpty(date_of_event_from)) {
+  if (validator.isEmpty(data.date_of_event_from)) {
     errors.date_of_event_from = "Date Required.";
   }
 
   if (
-    !validator.isEmpty(date.date_of_event_to) &&
+    !validator.isEmpty(data.date_of_event_to) &&
+    // @ts-expect-error
     !validator.isISO8601(data.date_of_event_to, (options = { strict: true }))
   ) {
     errors.date_of_event_to = "Invalid Date (or) Format. **(YYYY-MM-DD)";
@@ -41,3 +44,5 @@ module.exports = validateEvent = (data) => {
     isValid: isEmpty(errors),
   };
 };
+
+module.exports = validateEvent;

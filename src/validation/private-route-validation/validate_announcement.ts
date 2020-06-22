@@ -1,8 +1,9 @@
-const validator = require("validator");
+import validator from "validator";
+
 const isEmpty = require("../is-empty");
 
-module.exports = validateAnnouncement = (data) => {
-  let errors = {};
+const validateAnnouncement = (data: any) => {
+  let errors: any = {};
 
   data.content = !isEmpty(data.content) ? data.content : "";
 
@@ -19,3 +20,5 @@ module.exports = validateAnnouncement = (data) => {
     isValid: isEmpty(errors),
   };
 };
+
+module.exports = validateAnnouncement;

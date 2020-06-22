@@ -1,10 +1,13 @@
-const validator = require("validator");
+import validator from "validator";
+
 const isEmpty = require("../is-empty");
 
-module.exports = validateTeacherInput = (data) => {
-  let errors = {};
+const validateStudentInput = (data: any) => {
+  let errors: any = {};
 
   data.full_name = !isEmpty(data.full_name) ? data.full_name : "";
+  data.gender = !isEmpty(data.gender) ? data.gender : "";
+  data.dob = !isEmpty(data.dob) ? data.dob : "";
   data.date_from = !isEmpty(data.date_from) ? data.date_from : "";
   data.date_to = !isEmpty(data.date_to) ? data.date_to : "";
   data.email = !isEmpty(data.email) ? data.email : "";
@@ -19,7 +22,24 @@ module.exports = validateTeacherInput = (data) => {
   }
 
   if (
+    !validator.isEmpty(data.gender) &&
+    !validator.isLength(data.gender, { max: 1 })
+  ) {
+    errors.gender = "Gender -> No: of characters (1)";
+  }
+
+  // @ts-expect-error
+  if (!validator.isISO8601(data.dob, (options = { strict: true }))) {
+    errors.dob = "Invalid Date (or) Format. **(YYYY-MM-DD)";
+  }
+
+  if (validator.isEmpty(data.dob)) {
+    errors.dob = "Date of Birth is required.";
+  }
+
+  if (
     !validator.isEmpty(data.date_from) &&
+    // @ts-expect-error
     !validator.isISO8601(data.date_from, (options = { strict: true }))
   ) {
     errors.date_from = "Invalid Date. **Format (YYYY-MM-DD)";
@@ -27,6 +47,7 @@ module.exports = validateTeacherInput = (data) => {
 
   if (
     !validator.isEmpty(data.date_to) &&
+    // @ts-expect-error
     !validator.isISO8601(data.date_to, (option = { strict: true }))
   ) {
     errors.date_to = "Invalid Date. **Format (YYYY-MM-DD)";
@@ -57,3 +78,5 @@ module.exports = validateTeacherInput = (data) => {
     isValid: isEmpty(errors),
   };
 };
+
+module.exports = validateStudentInput;

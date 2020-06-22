@@ -1,6 +1,6 @@
-const { genSalt, hash } = require("bcryptjs");
+import { genSalt, hash } from "bcryptjs";
 
-const setNewPassword = (data) =>
+const setNewPassword = (data: string) =>
   new Promise((resolve, reject) => {
     genSalt(10, (err, salt) => {
       if (err) {

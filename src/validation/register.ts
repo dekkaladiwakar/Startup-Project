@@ -1,8 +1,8 @@
-const validator = require("validator");
+import validator from "validator";
 const isEmpty = require("./is-empty");
 
-module.exports = validateRegisterInput = (data) => {
-  let errors = {};
+const validateRegisterInput = (data: any) => {
+  let errors: any = {};
 
   // If empty assigning it to empty string
   // since validator only checks for string types
@@ -142,3 +142,5 @@ module.exports = validateRegisterInput = (data) => {
     isValid: isEmpty(errors),
   };
 };
+
+module.exports = validateRegisterInput;

@@ -1,10 +1,11 @@
-const express = require("express");
-const passport = require("passport");
+import express from "express";
+import passport from "passport";
+import { Pool } from "mysql";
 
 const router = express.Router();
 
 // DB Connection
-const conn = require("../../../../config/connection");
+const conn: Pool = require("../../../../config/connection");
 
 // Validation
 const validateHoliday = require("../../../../validation/private-route-validation/validate_holiday");
@@ -34,6 +35,7 @@ router.get(
   (req, res) => {
     conn.query(
       "SELECT institute_name, date_of_holiday_from, date_of_holiday_to, reason, date_of_creation, time_of_creation FROM holidays WHERE institute_id = ?",
+      // @ts-expect-error
       req.user.institute_id,
       (err, rows) => {
         if (err) console.log("Query Error: " + err);
@@ -56,6 +58,7 @@ router.post(
       res.status(400).json(errors);
     } else {
       const holiday = {
+        // @ts-expect-error
         institute_id: req.user.institute_id,
         date_of_holiday_from: req.body.date_of_holiday_from,
         date_of_holiday_to: req.body.date_of_holiday_to,

@@ -1,10 +1,11 @@
-const express = require("express");
-const passport = require("passport");
+import express from "express";
+import passport from "passport";
+import { Pool } from "mysql";
 
 const router = express.Router();
 
 // DB Connection
-const conn = require("../../../../config/connection");
+const conn: Pool = require("../../../../config/connection");
 
 // Validation
 const validateAnnouncement = require("../../../../validation/private-route-validation/validate_announcement");
@@ -34,6 +35,7 @@ router.get(
   (req, res) => {
     conn.query(
       "SELECT institute_name, content, date_of_creation FROM announcements WHERE institute_id = ?",
+      // @ts-expect-error
       req.user.institute_id,
       (err, rows) => {
         if (err) console.log("Query Error: " + err);
@@ -57,7 +59,9 @@ router.post(
     } else {
       // ancmt = announcement
       const ancmt = {
+        // @ts-expect-error
         institute_id: req.user.institute_id,
+        // @ts-expect-error
         institute_name: req.user.institute_name,
         content: req.body.content,
         date_of_creation: curr_date,
