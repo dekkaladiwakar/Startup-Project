@@ -4,9 +4,9 @@
   "description": "Management System",
   "main": "server.js",
   "scripts": {
-    "server": "nodemon server.js",
+    "server": "nodemon ./dist/server.js",
     "test": "nodemon test3.js",
-    "dev": "nodemon server.ts",
+    "dev": "nodemon ./src/server.ts",
     "build": "tsc -p ."
   },
   "author": "Diwakar",
@@ -24,8 +24,11 @@
   },
   "devDependencies": {
     "@types/express": "^4.17.6",
+    "@types/jsonwebtoken": "^8.5.0",
+    "@types/mysql": "^2.15.14",
     "@types/node": "^14.0.13",
     "@types/passport": "^1.0.3",
+    "@types/passport-jwt": "^3.0.3",
     "nodemon": "^2.0.2",
     "ts-node": "^8.10.2",
     "typescript": "^3.9.5"

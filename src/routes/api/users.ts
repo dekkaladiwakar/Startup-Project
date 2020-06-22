@@ -1,6 +1,9 @@
-const express = require("express");
-const jwt = require("jsonwebtoken");
-const passport = require("passport");
+import express from "express";
+import jwt, { Secret } from "jsonwebtoken";
+import passport from "passport";
+
+// Keys File
+import { secretOrKey } from "../../config/keys";
 
 const router = express.Router();
 
@@ -25,7 +28,7 @@ router.get("/", (req, res) => {
 // @desc    Sending register.html File
 // @access  Public
 router.get("/register", (req, res) => {
-  res.sendFile("register.html", { root: __dirname + "/../../public/html" });
+  res.sendfile("register.html", { root: __dirname + "/../../public/html" });
 });
 // @route   GET api/users/login
 // @desc    Sending login.html File
@@ -44,7 +47,7 @@ router.post("/login", (req, res) => {
     res.status(400).json(errors);
   } else {
     managementLogin(req.body)
-      .then((data) => {
+      .then((data: any) => {
         // JWT Payload
         const payload = {
           institute_id: data.rows[1].institute_id,
@@ -60,20 +63,15 @@ router.post("/login", (req, res) => {
         };
 
         // Sign Token
-        jwt.sign(
-          payload,
-          process.env.secretOrKey,
-          { expiresIn: 3600 },
-          (err, token) => {
-            res.json({
-              success: data.rows[0].status,
-              message: data.message,
-              token: "Bearer " + token,
-            });
-          }
-        );
+        jwt.sign(payload, secretOrKey, { expiresIn: 3600 }, (err, token) => {
+          res.json({
+            success: data.rows[0].status,
+            message: data.message,
+            token: "Bearer " + token,
+          });
+        });
       })
-      .catch((err) => res.status(400).json(err));
+      .catch((err: {}) => res.status(400).json(err));
   }
 });
 
@@ -87,7 +85,7 @@ router.post("/teacherLogin", (req, res) => {
     res.status(400).json(errors);
   } else {
     teacherLogin(req.body)
-      .then((data) => {
+      .then((data: any) => {
         // JWT Payload
         const payload = {
           teacher_id: data.rows[1].teacher_id,
@@ -102,20 +100,15 @@ router.post("/teacherLogin", (req, res) => {
         };
 
         // Sign Token
-        jwt.sign(
-          payload,
-          process.env.secretOrKey,
-          { expiresIn: 3600 },
-          (err, token) => {
-            res.json({
-              success: data.rows[0].status,
-              message: data.message,
-              token: "Bearer " + token,
-            });
-          }
-        );
+        jwt.sign(payload, secretOrKey, { expiresIn: 3600 }, (err, token) => {
+          res.json({
+            success: data.rows[0].status,
+            message: data.message,
+            token: "Bearer " + token,
+          });
+        });
       })
-      .catch((err) => res.status(400).json(err));
+      .catch((err: {}) => res.status(400).json(err));
   }
 });
 
@@ -129,10 +122,10 @@ router.post("/register", (req, res) => {
     return res.status(400).json(errors);
   } else {
     managementRegister(req.body)
-      .then((data) => {
+      .then((data: {}) => {
         res.status(200).json(data);
       })
-      .catch((err) => res.status(400).json(err));
+      .catch((err: {}) => res.status(400).json(err));
   }
 });
 

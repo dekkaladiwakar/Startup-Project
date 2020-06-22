@@ -2,3 +2,4 @@
 package-lock.json
 .env
 /test
+/config/keys.ts
