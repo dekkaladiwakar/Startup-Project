@@ -16,7 +16,7 @@ module.exports = validateTeacherLoginInput = (data) => {
   }
 
   if (!validator.isLength(data.password, { min: 6, max: 12 })) {
-    errors.password = "Re-check your password.";
+    errors.password = "Re-check your password. Length (6-12 Characters)";
   }
 
   if (validator.isEmpty(data.password)) {
