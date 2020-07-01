@@ -2,7 +2,7 @@ require("dotenv").config();
 
 import express from "express";
 import bodyParser from "body-parser";
-import passport, { session } from "passport";
+import passport from "passport";
 
 // Custom Routes
 const users = require("./routes/api/users");
