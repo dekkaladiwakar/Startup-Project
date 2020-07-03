@@ -49,7 +49,7 @@ router.get(
 );
 
 // @route   POST /api/u/students/add
-// @desc    Add studetns
+// @desc    Add studetns, parent details
 // @access  Private
 router.post(
   "/add",
@@ -60,9 +60,10 @@ router.post(
     if (!isValid) {
       res.status(400).json(errors);
     } else {
-      const student = {
+      const student_parent = {
         // @ts-expect-error
         institute_id: req.user.institute_id,
+        class_id: req.body.class_id,
         full_name: req.body.full_name,
         gender: req.body.gender,
         dob: req.body.dob,
@@ -72,10 +73,18 @@ router.post(
         phone_number: req.body.phone_number,
         date_of_creation: curr_date,
         time_of_creation: curr_time,
+        father: req.body.father,
+        occupation_father: req.body.occupation_father,
+        mother: req.body.mother,
+        occupation_mother: req.body.occupation_mother,
+        i_address: req.body.address,
+        p_email: req.body.p_email,
+        primary_number: req.body.primary_number,
+        secondary_number: req.body.secondary_number,
       };
 
       // Need to be converted into JSON String for DB to consider it as JSON object
-      const studentJSON = JSON.stringify(student);
+      const studentJSON = JSON.stringify(student_parent);
 
       addStudent(studentJSON)
         .then((data: {}) => res.status(200).json(data))
