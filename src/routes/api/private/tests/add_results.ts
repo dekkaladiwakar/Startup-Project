@@ -17,7 +17,7 @@ const addResult = (data: {}) =>
         } else {
           console.log("Add_Results Procedure Executed.");
           const result = {
-            success: Boolean.prototype,
+            success: true,
             message: "",
           };
 

@@ -11,7 +11,7 @@ const conn: Pool = require("../../../../config/connection");
 const addStudent = require("./add_student");
 
 // Validation
-const validateStudentInput = require("../../../../validation/private-route-validation/validate_student");
+const validateStudentInput = require("../../../../validation/private-route-validation/student");
 
 // Current Date & Time
 const current_dateTime = new Date();
@@ -88,7 +88,7 @@ router.post(
 
       addStudent(studentJSON)
         .then((data: {}) => res.status(200).json(data))
-        .catch((err: Error) => res.status(400).json(err));
+        .catch((err: {}) => res.status(400).json(err));
     }
   }
 );

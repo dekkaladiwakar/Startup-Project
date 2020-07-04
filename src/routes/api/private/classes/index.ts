@@ -11,7 +11,7 @@ const conn: Pool = require("../../../../config/connection");
 const addClass = require("./add_class");
 
 // Validation
-const validateClassInput = require("../../../../validation/private-route-validation/validate_class");
+const validateClassInput = require("../../../../validation/private-route-validation/class");
 
 // @route   GET /api/u/class
 // @desc    Class page
@@ -69,7 +69,7 @@ router.post(
 
       addClass(classJSON)
         .then((data: {}) => res.status(200).json(data))
-        .catch((err: Error) => res.status(400).json(err));
+        .catch((err: {}) => res.status(400).json(err));
     }
   }
 );

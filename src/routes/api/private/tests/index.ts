@@ -77,7 +77,7 @@ router.post(
 
       addTest(syllabusJSON)
         .then((data: {}) => res.status(200).json(data))
-        .catch((err: Error) => res.status(400).json(err));
+        .catch((err: {}) => res.status(400).json(err));
     }
   }
 );

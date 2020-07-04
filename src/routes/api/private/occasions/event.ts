@@ -8,7 +8,7 @@ const router = express.Router();
 const conn: Pool = require("../../../../config/connection");
 
 // Validation
-const validateEvent = require("../../../../validation/private-route-validation/validate_event");
+const validateEvent = require("../../../../validation/private-route-validation/event");
 
 // Current Date & Time
 const current_dateTime = new Date();

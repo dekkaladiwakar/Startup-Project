@@ -16,7 +16,7 @@ const addTeacher = (data: {}) =>
           });
         } else {
           console.log("Add_Teachers Procedure Executed.");
-          const result = { success: Boolean.prototype, message: "" };
+          const result = { success: true, message: "" };
 
           rows[1][0]["@result"] === 1
             ? ((result.success = true),

@@ -8,7 +8,7 @@ const router = express.Router();
 const conn: Pool = require("../../../../config/connection");
 
 // Validation
-const validateHoliday = require("../../../../validation/private-route-validation/validate_holiday");
+const validateHoliday = require("../../../../validation/private-route-validation/holiday");
 
 // Current Date & Time
 const current_dateTime = new Date();
