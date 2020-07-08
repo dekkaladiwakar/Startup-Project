@@ -22,7 +22,16 @@ router.post(
   "/add",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    const exam = {};
+    const exam = {
+      //@ts-expect-error
+      institute_id: req.user.institute_id,
+      class_id: JSON.parse(req.body.classID),
+      subject_id: req.body.subject_id,
+      exam_date: req.body.exam_date,
+      syllabus: req.body.syllabus,
+      date_added: req.body.date_added,
+      time_added: req.body.time_added,
+    };
 
     const examJSON = JSON.stringify(exam);
 

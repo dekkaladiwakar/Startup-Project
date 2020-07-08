@@ -5,7 +5,7 @@ const conn: Pool = require("../../../../config/connection");
 const addTeacher = (data: {}) =>
   new Promise((resolve, reject) => {
     conn.query(
-      "CALL add_teachers(?, @message, @result); SELECT @message, @result;",
+      "CALL AddTeacher(?, @message, @result); SELECT @message, @result;",
       data,
       (err, rows) => {
         if (err) {

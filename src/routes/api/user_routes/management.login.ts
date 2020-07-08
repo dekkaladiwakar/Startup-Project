@@ -9,7 +9,7 @@ const managementLogin = (data: { institute_id: string; password: string }) =>
     const password = data.password;
 
     conn.query(
-      "CALL management_login(?, @result); select @result",
+      "CALL ManagementLogin(?, @result); select @result",
       institute_id,
       (err, rows) => {
         if (err) {

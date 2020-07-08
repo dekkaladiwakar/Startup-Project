@@ -52,7 +52,7 @@ const managemenetRegister = (data: {
         const instituteJSON = JSON.stringify(institute);
 
         conn.query(
-          `call insert_management_details(?, @message, @success); select @message, @success`,
+          `call Insert_ManagementDetails(?, @message, @success); select @message, @success`,
           instituteJSON,
           (err, rows) => {
             if (err) {

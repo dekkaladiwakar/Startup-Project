@@ -13,7 +13,7 @@ const teacherLogin = (data: { login_id: string; password: string }) =>
     const password = data.password;
 
     conn.query(
-      "CALL teacher_login(?, @result); SELECT @result;",
+      "CALL TeacherLogin(?, @result); SELECT @result;",
       login_id,
       (err, rows) => {
         if (err) {
