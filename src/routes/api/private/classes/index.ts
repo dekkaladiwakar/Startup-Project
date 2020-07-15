@@ -32,7 +32,7 @@ router.get(
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     conn.query(
-      "SELECT class_name, section_name FROM classes WHERE institute_id = ?",
+      "SELECT class, section FROM classes WHERE institute_id = ?",
       // @ts-expect-error
       req.user.institute_id,
       (err, rows) => {
@@ -58,10 +58,9 @@ router.post(
       const class_details = {
         //@ts-expect-error
         institute_id: req.user.institute_id,
-        //@ts-expect-error
-        teacher_id: req.user.homeroom_teacher_id,
-        class_name: req.body.class_name,
-        section_name: req.body.section_name,
+        teacher_id: req.body.homeroom_teacher_id,
+        class: req.body.class,
+        section: req.body.section,
       };
 
       // Need to be converted into JSON String for DB to consider it as JSON object

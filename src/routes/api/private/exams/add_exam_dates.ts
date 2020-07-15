@@ -5,7 +5,7 @@ const conn: Pool = require("../../../../config/connection");
 const addExam = (data: {}) =>
   new Promise((resolve, reject) => {
     conn.query(
-      "CALL AddExam(?, @message, @result); SELECT @message, @result;",
+      "CALL AddExamDates(?, @message, @result); SELECT @message, @result;",
       data,
       (err, rows) => {
         if (err) {

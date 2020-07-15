@@ -7,6 +7,9 @@ const router = express.Router();
 // DB Connection
 const conn: Pool = require("../../../../config/connection");
 
+// Custom Routes
+const addAttendance = require("./addAttendance");
+
 // @route   GET /api/u/attendence
 // @desc    Attendence Page
 // @access  Private
@@ -46,7 +49,13 @@ router.get(
 router.post(
   "/add",
   passport.authenticate("jwt", { session: false }),
-  (req, res) => {}
+  (req, res) => {
+    addAttendance(req.body)
+      .then((result: {}) => {
+        res.status(200).json(result);
+      })
+      .catch((err: {}) => res.status(400).json(err));
+  }
 );
 
 module.exports = router;

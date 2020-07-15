@@ -1,6 +1,7 @@
 import express from "express";
 import passport from "passport";
 import { Pool } from "mysql";
+import { EDESTADDRREQ } from "constants";
 
 const router = express.Router();
 
@@ -8,7 +9,7 @@ const router = express.Router();
 const conn: Pool = require("../../../../config/connection");
 
 // Custom Routes
-const addExam = require("./add_exam");
+const addExamDates = require("./add_exam");
 
 router.get(
   "/",
@@ -19,23 +20,25 @@ router.get(
 );
 
 router.post(
-  "/add",
+  "/addDates",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    const exam = {
+    const examDates = {
       //@ts-expect-error
       institute_id: req.user.institute_id,
-      class_id: JSON.parse(req.body.classID),
-      subject_id: req.body.subject_id,
+      classes: JSON.parse(req.body.classID),
+      subjects: JSON.parse(req.body.subject_id),
+      type_id: req.body.type_id,
       exam_date: req.body.exam_date,
-      syllabus: req.body.syllabus,
+      start_time: req.body.start_time,
+      end_time: req.body.end_time,
       date_added: req.body.date_added,
       time_added: req.body.time_added,
     };
 
-    const examJSON = JSON.stringify(exam);
+    const examJSON = JSON.stringify(examDates);
 
-    addExam(examJSON)
+    addExamDates(examJSON)
       .then((result: {}) => res.status(200).json(result))
       .catch((err: {}) => res.status(400).json(err));
   }
