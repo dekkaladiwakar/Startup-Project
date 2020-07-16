@@ -2,10 +2,10 @@ import { Pool } from "mysql";
 
 const conn: Pool = require("../../../../config/connection");
 
-const addTimeTable = (data: {}) =>
+const addTimeSlot = (data: {}) =>
   new Promise((resolve, reject) => {
     conn.query(
-      "CALL AddTimeTable(?, @message, @result); SELECT @message, @result;",
+      "CALL AddTimeSlot(?, @message, @result); SELECT @message, @result;",
       data,
       (err, rows) => {
         if (err) {
@@ -15,7 +15,7 @@ const addTimeTable = (data: {}) =>
             message: "Sorry for the inconvenience. Please try again later.",
           });
         } else {
-          console.log("Add_TimeTable Procedure Executed.");
+          console.log("Add_TimeSlot Procedure Executed.");
           const result = {
             success: true,
             message: "",
@@ -32,4 +32,4 @@ const addTimeTable = (data: {}) =>
     );
   });
 
-module.exports = addTimeTable;
+module.exports = addTimeSlot;
