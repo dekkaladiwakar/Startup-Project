@@ -22,7 +22,7 @@ router.get(
 );
 
 // @route   GET /api/u/attendence/all
-// @desc    Attendence Page
+// @desc    Get attendance of class
 // @access  Private
 router.get(
   "/all",

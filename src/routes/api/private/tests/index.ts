@@ -16,6 +16,9 @@ const current_dateTime = new Date();
 const curr_date = current_dateTime.toLocaleDateString();
 const curr_time = current_dateTime.toLocaleTimeString();
 
+// @route   GET /api/u/tests
+// @desc    Display tests
+// @access  Private
 router.get(
   "/",
   passport.authenticate("jwt", { session: false }),
@@ -24,6 +27,9 @@ router.get(
   }
 );
 
+// @route   POST /api/u/tests/addTestResults
+// @desc    Add test results
+// @access  Private
 router.post(
   "/addTestResults",
   passport.authenticate("jwt", { session: false }),
@@ -53,6 +59,9 @@ router.post(
   }
 );
 
+// @route   POST /api/u/tests/addTestSyllabus
+// @desc    Add test syllabus
+// @access  Private
 router.post(
   "/addTestSyllabus",
   passport.authenticate("jwt", { session: false }),

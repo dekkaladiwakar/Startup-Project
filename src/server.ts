@@ -16,6 +16,8 @@ const announcements = require("./routes/api/private/occasions/announcement");
 const holidays = require("./routes/api/private/occasions/holiday");
 const exams = require("./routes/api/private/exams/index");
 const tests = require("./routes/api/private/tests/index");
+const homework = require("./routes/api/private/homework/index");
+const timetable = require("./routes/api/private/timetable/index");
 
 const app = express();
 
@@ -51,6 +53,8 @@ app.use("/api/u/occasions/announcements", announcements);
 app.use("/api/u/occasions/holidays", holidays);
 app.use("/api/u/exams", exams);
 app.use("/api/u/tests", tests);
+app.use("/api/u/homework", homework);
+app.use("/api/u/timetable", timetable);
 
 const port = process.env.PORT || process.env.USER_PORT;
 

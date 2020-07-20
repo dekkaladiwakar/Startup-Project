@@ -7,6 +7,9 @@ const addTimeSlot = require("./add_timeslot");
 
 const router = express.Router();
 
+// @route   GET /api/u/timetable
+// @desc    Timetable Page
+// @access  Private
 router.get(
   "/",
   passport.authenticate("jwt", { session: false }),
@@ -15,6 +18,9 @@ router.get(
   }
 );
 
+// @route   POST /api/u/timetable/addTimeSlots
+// @desc    Add timeslots
+// @access  Private
 router.post(
   "/addTimeSlots",
   passport.authenticate("jwt", { session: false }),
@@ -37,6 +43,9 @@ router.post(
   }
 );
 
+// @route   POST /api/u/timetable/addTimetable
+// @desc    Add timetable
+// @access  Private
 router.post(
   "/addTimetable",
   passport.authenticate("jwt", { session: false }),
