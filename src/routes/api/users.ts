@@ -1,5 +1,5 @@
 import express from "express";
-import jwt, { Secret } from "jsonwebtoken";
+import { sign } from "jsonwebtoken";
 import passport from "passport";
 
 // Keys File
@@ -17,29 +17,58 @@ const managementLogin = require("./user_routes/management.login");
 const managementRegister = require("./user_routes/management.register");
 const teacherLogin = require("./user_routes/teacher.login");
 
-// @route   GET api/users/
-// @desc    Sending index.html File
-// @access  Public
+/**
+ * @swagger
+ * /api/users:
+ *  get:
+ *    descrption: Sending index.html file
+ *    access: public
+ *    responses:
+ *      '200':
+ *        description: "Successfully loaded."
+ */
 router.get("/", (req, res) => {
   res.sendFile("index.html", { root: __dirname + "/../../public/html" });
 });
 
-// @route   GET api/users/register
-// @desc    Sending register.html File
-// @access  Public
+/**
+ * @swagger
+ * /api/users/register:
+ *  get:
+ *    descrption: Sending register.html file
+ *    access: public
+ *    responses:
+ *      '200':
+ *        description: "Successfully loaded."
+ */
 router.get("/register", (req, res) => {
   res.sendFile("register.html", { root: __dirname + "/../../public/html" });
 });
-// @route   GET api/users/login
-// @desc    Sending login.html File
-// @access  Public
+
+/**
+ * @swagger
+ * /api/users/login:
+ *  get:
+ *    descrption: Sending login.html file
+ *    access: public
+ *    responses:
+ *      '200':
+ *        description: "Successfully loaded."
+ */
 router.get("/login", (req, res) => {
   res.sendFile("login.html", { root: __dirname + "/../../public/html" });
 });
 
-// @route   POST api/users/login
-// @desc    School Login
-// @access  Public
+/**
+ * @swagger
+ * /api/users/login:
+ *  post:
+ *    descrption: School Login
+ *    access: public
+ *    responses:
+ *      '200':
+ *        description: "User data received"
+ */
 router.post("/login", (req, res) => {
   const { errors, isValid } = validateLoginInput(req.body);
 
@@ -63,7 +92,7 @@ router.post("/login", (req, res) => {
         };
 
         // Sign Token
-        jwt.sign(payload, secretOrKey, { expiresIn: 3600 }, (err, token) => {
+        sign(payload, secretOrKey, { expiresIn: 3600 }, (err, token) => {
           res.json({
             success: data.rows[0].status,
             message: data.message,
@@ -75,9 +104,18 @@ router.post("/login", (req, res) => {
   }
 });
 
-// @route   POST api/users/teacherlogin
-// @desc    Teacher Login
-// @access  Public
+/**
+ * @swagger
+ * /api/users/teacherLogin:
+ *  post:
+ *    descrption: Teacher Login
+ *    access: public
+ *    responses:
+ *      '200':
+ *        description: "User data received"
+ *      '400':
+ *        description: "Errors found."
+ */
 router.post("/teacherLogin", (req, res) => {
   const { errors, isValid } = validateTeacherLoginInput(req.body);
 
@@ -100,7 +138,7 @@ router.post("/teacherLogin", (req, res) => {
         };
 
         // Sign Token
-        jwt.sign(payload, secretOrKey, { expiresIn: 3600 }, (err, token) => {
+        sign(payload, secretOrKey, { expiresIn: 3600 }, (err, token) => {
           res.json({
             success: data.rows[0].status,
             message: data.message,
@@ -112,9 +150,19 @@ router.post("/teacherLogin", (req, res) => {
   }
 });
 
-// @route   POST api/users/register
-// @desc    School Register
-// @access  Public
+/**
+ * @swagger
+ * /api/users/register:
+ *  post:
+ *    descrption: School Register
+ *    access: public
+ *    responses:
+ *      '200':
+ *        description: "User data Sent"
+ *      '400':
+ *        description: "Errors found."
+ */
+
 router.post("/register", (req, res) => {
   const { errors, isValid } = validateRegisterInput(req.body);
 
@@ -129,9 +177,16 @@ router.post("/register", (req, res) => {
   }
 });
 
-// @route   GET api/users/checkToken
-// @desc    Cheking payload (Test Route)
-// @access  Private
+/**
+ * @swagger
+ * /api/users/checkToken:
+ *  get:
+ *    description: Checking Payload (Test Route)
+ *    access: Private
+ *    response:
+ *      '200':
+ *        description: "User Details Reeceived."
+ */
 router.get(
   "/checkToken",
   passport.authenticate("jwt", { session: false }),

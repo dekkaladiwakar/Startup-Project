@@ -3,6 +3,8 @@ require("dotenv").config();
 import express from "express";
 import bodyParser from "body-parser";
 import passport from "passport";
+import swaggerJsDocs from "swagger-jsdoc";
+import swaggerUi from "swagger-ui-express";
 
 // Custom Routes
 const users = require("./routes/api/users");
@@ -21,6 +23,24 @@ const timetable = require("./routes/api/private/timetable/index");
 
 const app = express();
 
+const swaggerOptions = {
+  swaggerDefinition: {
+    info: {
+      title: "School Management System",
+      description: "All details realted to school.",
+      version: "1.0.4",
+      contact: {
+        name: "Diwakar",
+      },
+      servers: ["http://localhost:8080"],
+    },
+  },
+  // ['.routes/*.js]
+  apis: ["./src/server.ts", "./src/routes/api/*.ts"],
+};
+
+const swaggerDocs = swaggerJsDocs(swaggerOptions);
+
 // Use static files in public folder
 app.use(express.static(__dirname + "/public"));
 
@@ -28,9 +48,18 @@ app.use(express.static(__dirname + "/public"));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-// @route   GET www.tyudent.com
-// @desc    Main page
-// @access  Public
+// Swagger
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+
+/**
+ * @swagger
+ * /:
+ *  get:
+ *    descrption: Main Page of the website
+ *    responses:
+ *      '200':
+ *        description: "Successfully loaded."
+ */
 app.get("/", (req, res) => {
   res.sendFile("main.html", { root: __dirname + "/./public/html" });
 });

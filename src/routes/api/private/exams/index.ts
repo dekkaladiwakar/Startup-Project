@@ -9,7 +9,7 @@ const router = express.Router();
 const conn: Pool = require("../../../../config/connection");
 
 // Custom Routes
-const addExamDates = require("./add_exam");
+const addExamDates = require("./add_exam_dates");
 
 router.get(
   "/",
