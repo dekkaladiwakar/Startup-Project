@@ -1,0 +1,68 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "School Management System",
+    "description": "All details realted to school.",
+    "version": "1.0.0",
+    "contact": {
+      "name": "Diwakar",
+      "email": "schoolmanagementsystem2020@gmail.com"
+    }
+  },
+  "tags": [
+    {
+      "name": "Home",
+      "desciprtion": "Home page realted APIs"
+    },
+    {
+      "name": "Users",
+      "desciprtion": "User realted APIs"
+    },
+    {
+      "name": "Attendance",
+      "desciprtion": "Attendance realted APIs"
+    },
+    {
+      "name": "Classes",
+      "desciprtion": "Class realted APIs"
+    },
+    {
+      "name": "Exams",
+      "desciprtion": "Exam realted APIs"
+    },
+    {
+      "name": "Homework",
+      "desciprtion": "Homework realted APIs"
+    },
+    {
+      "name": "Occasions",
+      "desciprtion": "Occasion realted APIs"
+    },
+    {
+      "name": "Students",
+      "desciprtion": "Students realted APIs"
+    },
+    {
+      "name": "Teachers",
+      "desciprtion": "Teacher realted APIs"
+    },
+    {
+      "name": "Tests",
+      "desciprtion": "Test realted APIs"
+    },
+    {
+      "name": "Timetable",
+      "desciprtion": "Timetable realted APIs"
+    }
+  ],
+  "servers": [{ "url": "http://localhost:8080", "description": "Main Server" }],
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}

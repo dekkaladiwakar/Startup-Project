@@ -6,6 +6,8 @@ import passport from "passport";
 import swaggerJsDocs from "swagger-jsdoc";
 import swaggerUi from "swagger-ui-express";
 
+import * as swaggerDocument from "./swagger.json";
+
 // Custom Routes
 const users = require("./routes/api/users");
 const dashboard = require("./routes/api/private/dashboard");
@@ -13,7 +15,7 @@ const classes = require("./routes/api/private/classes/index");
 const students = require("./routes/api/private/students/index");
 const teachers = require("./routes/api/private/teachers/index");
 const occasions = require("./routes/api/private/occasions/index");
-const attendence = require("./routes/api/private/attendence");
+const attendence = require("./routes/api/private/attendance");
 const announcements = require("./routes/api/private/occasions/announcement");
 const holidays = require("./routes/api/private/occasions/holiday");
 const exams = require("./routes/api/private/exams/index");
@@ -23,20 +25,16 @@ const timetable = require("./routes/api/private/timetable/index");
 
 const app = express();
 
+//Swagger Setup
+
 const swaggerOptions = {
-  swaggerDefinition: {
-    info: {
-      title: "School Management System",
-      description: "All details realted to school.",
-      version: "1.0.4",
-      contact: {
-        name: "Diwakar",
-      },
-      servers: ["http://localhost:8080"],
-    },
-  },
-  // ['.routes/*.js]
-  apis: ["./src/server.ts", "./src/routes/api/*.ts"],
+  swaggerDefinition: swaggerDocument,
+  // ['.routes/*.*]
+  apis: [
+    "./src/server.ts",
+    "./src/routes/api/userDoc.yaml",
+    "./src/routes/api/private/*/*Doc.yaml",
+  ],
 };
 
 const swaggerDocs = swaggerJsDocs(swaggerOptions);
@@ -48,13 +46,15 @@ app.use(express.static(__dirname + "/public"));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-// Swagger
+// Swagger middleware
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 /**
  * @swagger
  * /:
  *  get:
+ *    tags:
+ *      - Home
  *    descrption: Main Page of the website
  *    responses:
  *      '200':

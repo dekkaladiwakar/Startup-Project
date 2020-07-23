@@ -11,18 +11,18 @@ const conn: Pool = require("../../../../config/connection");
 const addAttendance = require("./addAttendance");
 
 // @route   GET /api/u/attendence
-// @desc    Attendence Page
+// @desc    Attendance Page
 // @access  Private
 router.get(
   "/",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    res.status(200).send("Announcement Page");
+    res.status(200).send("Attendance Page");
   }
 );
 
 // @route   GET /api/u/attendence/all
-// @desc    Get attendance of class
+// @desc    Send section attendance
 // @access  Private
 router.get(
   "/all",
@@ -44,7 +44,7 @@ router.get(
 );
 
 // @route   POST /api/u/attendence/add
-// @desc    Attendence Page
+// @desc    Add attendance
 // @access  Private
 router.post(
   "/add",

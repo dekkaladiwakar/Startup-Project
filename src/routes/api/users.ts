@@ -17,58 +17,30 @@ const managementLogin = require("./user_routes/management.login");
 const managementRegister = require("./user_routes/management.register");
 const teacherLogin = require("./user_routes/teacher.login");
 
-/**
- * @swagger
- * /api/users:
- *  get:
- *    descrption: Sending index.html file
- *    access: public
- *    responses:
- *      '200':
- *        description: "Successfully loaded."
- */
+// @route   GET /api/users
+// @desc    Index page
+// @access  Private
 router.get("/", (req, res) => {
   res.sendFile("index.html", { root: __dirname + "/../../public/html" });
 });
 
-/**
- * @swagger
- * /api/users/register:
- *  get:
- *    descrption: Sending register.html file
- *    access: public
- *    responses:
- *      '200':
- *        description: "Successfully loaded."
- */
+// @route   GET /api/users/register
+// @desc    Register page
+// @access  Private
 router.get("/register", (req, res) => {
   res.sendFile("register.html", { root: __dirname + "/../../public/html" });
 });
 
-/**
- * @swagger
- * /api/users/login:
- *  get:
- *    descrption: Sending login.html file
- *    access: public
- *    responses:
- *      '200':
- *        description: "Successfully loaded."
- */
+// @route   GET /api/users/login
+// @desc    Login page
+// @access  Private
 router.get("/login", (req, res) => {
   res.sendFile("login.html", { root: __dirname + "/../../public/html" });
 });
 
-/**
- * @swagger
- * /api/users/login:
- *  post:
- *    descrption: School Login
- *    access: public
- *    responses:
- *      '200':
- *        description: "User data received"
- */
+// @route   POST /api/users/login
+// @desc    Institute Login
+// @access  Public
 router.post("/login", (req, res) => {
   const { errors, isValid } = validateLoginInput(req.body);
 
@@ -104,18 +76,9 @@ router.post("/login", (req, res) => {
   }
 });
 
-/**
- * @swagger
- * /api/users/teacherLogin:
- *  post:
- *    descrption: Teacher Login
- *    access: public
- *    responses:
- *      '200':
- *        description: "User data received"
- *      '400':
- *        description: "Errors found."
- */
+// @route   POST /api/users/teacherLogin
+// @desc    Teacher Login
+// @access  Public
 router.post("/teacherLogin", (req, res) => {
   const { errors, isValid } = validateTeacherLoginInput(req.body);
 
@@ -150,19 +113,9 @@ router.post("/teacherLogin", (req, res) => {
   }
 });
 
-/**
- * @swagger
- * /api/users/register:
- *  post:
- *    descrption: School Register
- *    access: public
- *    responses:
- *      '200':
- *        description: "User data Sent"
- *      '400':
- *        description: "Errors found."
- */
-
+// @route   POST /api/users/register
+// @desc    School register
+// @access  Public
 router.post("/register", (req, res) => {
   const { errors, isValid } = validateRegisterInput(req.body);
 
@@ -173,20 +126,13 @@ router.post("/register", (req, res) => {
       .then((data: {}) => {
         res.status(200).json(data);
       })
-      .catch((err: {}) => res.status(400).json(err));
+      .catch((err: {}) => res.status(500).json(err));
   }
 });
 
-/**
- * @swagger
- * /api/users/checkToken:
- *  get:
- *    description: Checking Payload (Test Route)
- *    access: Private
- *    response:
- *      '200':
- *        description: "User Details Reeceived."
- */
+// @route   POST /api/users/checkToken
+// @desc    Checking payload
+// @access  Private
 router.get(
   "/checkToken",
   passport.authenticate("jwt", { session: false }),

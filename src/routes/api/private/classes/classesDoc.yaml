@@ -1,0 +1,36 @@
+paths:
+  /api/u/class:
+    get:
+      tags:
+        - Classes
+      summary: Class Page
+      access: Private
+      response:
+        200:
+          description: Attendance Page Sent
+        400:
+          description: Bad Request
+
+  /api/u/class/all:
+    get:
+      tags:
+        - Classes
+      summary: Get all available classes
+      access: Private
+      response:
+        200:
+          description: Classes details sent.
+        400:
+          description: Bad Request
+
+  /api/u/class/add:
+    post:
+      tags:
+        - Classes
+      summary: Add class
+      access: Private
+      response:
+        200:
+          description: Class added.
+        400:
+          description: Bad Request

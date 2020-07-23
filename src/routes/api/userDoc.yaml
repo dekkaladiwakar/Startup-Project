@@ -1,0 +1,174 @@
+paths:
+  /api/users:
+    get:
+      tags:
+        - Users
+      summary: Sending index.html file
+      access: public
+      responses:
+        200:
+          description: Successfully loaded.
+        400:
+          description: Bad Request.
+
+  /api/users/login:
+    get:
+      tags:
+        - Users
+      summary: Sending login.html file
+      access: public
+      responses:
+        200:
+          description: Successfully loaded.
+        400:
+          description: Bad Request.
+
+    post:
+      tags:
+        - Users
+      summary: Institute login
+      access: public
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                institute_id:
+                  type: string
+                password:
+                  type: string
+      responses:
+        200:
+          description: Successfully Logged In.
+          content:
+            application/json:
+              schema: object
+        400:
+          description: Check details and login again.
+
+  /api/users/teacherLogin:
+    post:
+      tags:
+        - Users
+      summary: Teacher login
+      access: public
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                institute_id:
+                  type: string
+                password:
+                  type: string
+      responses:
+        200:
+          description: Successfully Logged In.
+          content:
+            application/json:
+              schema: object
+        400:
+          description: Check details and login again.
+
+  /api/users/register:
+    get:
+      tags:
+        - Users
+      summary: Sending register.html file
+      access: public
+      responses:
+        200:
+          description: Successfully loaded.
+        400:
+          description: Bad Request.
+
+    post:
+      tags:
+        - Users
+      summary: School Register
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                institute_id:
+                  type: string
+                password:
+                  type: string
+                institute_name:
+                  type: string
+                institute_principal:
+                  type: string
+                email:
+                  type: string
+                phone_number:
+                  type: string
+                education_type:
+                  type: string
+                address:
+                  type: string
+                state:
+                  type: string
+                pincode:
+                  type: string
+                city:
+                  type: string
+                date_of_creation:
+                  type: string
+                time_of_creation:
+                  type: string
+      access: public
+      responses:
+        200:
+          description: User successfully registered.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  message:
+                    type: string
+
+        400:
+          description: Errors found.
+          content:
+            application/json:
+              schema:
+                type: object
+        500:
+          description: Server Error.
+          content:
+            application/json:
+              schema:
+                type: object
+
+  /api/users/checkToken:
+    get:
+      tags:
+        - Users
+      summary: Checking Payload (Test Route)
+      access: Private
+      responses:
+        "200":
+          description: User Details Reeceived.
+          content:
+            application/json:
+              schema:
+                type: object
+        "400":
+          description: Bad token.
+      security:
+        - bearerAuth: []
+
+components:
+  responses:
+    UnauthorizedError:
+      description: Access token is missing or invalid.
