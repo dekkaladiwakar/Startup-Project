@@ -1,0 +1,97 @@
+paths:
+  /api/u/tests:
+    get:
+      tags:
+        - Tests
+      summary: Test Page
+      responses:
+        200:
+          description: Success
+          content:
+            application/html:
+              schema:
+                type: file
+        400:
+          description: Error
+        500:
+          description: Server Error
+        default:
+          description: Unhandled Error
+      security:
+        - bearerAuth: []
+
+  /api/u/tests/addTestResults:
+    post:
+      tags:
+        - Tests
+      summary: Add test results
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                class_id:
+                  type: number
+                teacher_id:
+                  type: number
+                syllabus_id:
+                  type: number
+                test_results:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      student_id:
+                        type: number
+                      marks:
+                        type: number
+                out_of:
+                  type: number
+      responses:
+        200:
+          description: Success
+        400:
+          description: Error
+        500:
+          description: Server Error
+        default:
+          description: Unhandled Error
+      security:
+        - bearerAuth: []
+
+  /api/u/tests/addTestSyllabus:
+    post:
+      tags:
+        - Tests
+      summary: Add test syllabus
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                class_id:
+                  type: number
+                teacher_id:
+                  type: number
+                subject_id:
+                  type: string
+                syllabus_content:
+                  type: string
+      responses:
+        200:
+          description: Success
+        400:
+          description: Error
+        500:
+          description: Server Error
+        default:
+          description: Unhandled Error
+      security:
+        - bearerAuth: []
+components:
+  UnauthorizedError:
+    description: Access token is missing or invalid.

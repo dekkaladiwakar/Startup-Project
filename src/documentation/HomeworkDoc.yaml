@@ -1,0 +1,94 @@
+paths:
+  /api/u/homework/:
+    get:
+      tags:
+        - Homework
+      summary: Homework page
+      responses:
+        200:
+          description: Success
+          content:
+            application/html:
+              schema:
+                type: file
+        400:
+          description: Error
+        500:
+          description: Server Error
+        default:
+          description: Unhandled Error
+      security:
+        - bearerAuth: []
+
+  /api/u/homework/{id}:
+    get:
+      tags:
+        - Homework
+      summary: retrieve homework of a student
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+          description: Student ID
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    subject:
+                      type: string
+                    homework:
+                      type: string
+        400:
+          description: Error
+          content:
+            application/json:
+              schema:
+                type: object
+        500:
+          description: Server Error
+        default:
+          description: Unhandled Error
+      security:
+        - bearerAuth: []
+
+  /api/u/homework/add:
+    post:
+      tags:
+        - Homework
+      summary: Add Homework
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                timetable_id:
+                  type: number
+                date_created:
+                  type: string
+                homework_content:
+                  type: string
+      responses:
+        200:
+          description: Success
+        400:
+          description: Error
+        500:
+          description: Server Error
+        default:
+          description: Unhandled Error
+      security:
+        - bearerAuth: []
+
+components:
+  UnauthorizedError:
+    description: Access token is missing or invalid.

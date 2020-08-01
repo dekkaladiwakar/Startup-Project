@@ -1,0 +1,12 @@
+components:
+  responses:
+    Success:
+      description: OK
+    UnauthorizedError:
+      description: Access token is missing or invalid.
+    BadRequest:
+      description: User Error
+    ServerError:
+      description: Serverside Error
+    UnhandledError:
+      description: Unhandled Error

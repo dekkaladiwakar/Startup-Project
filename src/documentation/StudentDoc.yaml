@@ -1,0 +1,105 @@
+paths:
+  /api/u/students:
+    get:
+      tags:
+        - Students
+      summary: Students Page
+      responses:
+        200:
+          description: Page sent
+        400:
+          description: Error
+      security:
+        - bearerAuth: []
+
+  /api/u/students/all:
+    get:
+      tags:
+        - Students
+      summary: Get all students of institute
+      responses:
+        200:
+          description: Success
+        400:
+          description: Error
+      security:
+        - bearerAuth: []
+
+  /api/u/classes/students/add:
+    post:
+      tags:
+        - Classes
+      summary: Add students
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                class_id:
+                  type: integer
+                surname:
+                  type: string
+                name:
+                  type: string
+                surname_begining:
+                  type: string
+                  maxLength: 1
+                gender:
+                  type: string
+                  maxLength: 1
+                roll_number:
+                  type: string
+                  maxLength: 3
+                dob:
+                  type: string
+                date_from:
+                  type: string
+                date_to:
+                  type: string
+                email:
+                  type: string
+                phone_number:
+                  type: string
+                father:
+                  type: string
+                occupation_father:
+                  type: string
+                mother:
+                  type: string
+                occupation_mother:
+                  type: string
+                address:
+                  type: string
+                p_email:
+                  type: string
+                primary_number:
+                  type: string
+                secondary_number:
+                  type: string
+              required:
+                - class_id
+                - surname
+                - name
+                - surname_begining
+                - dob
+                - date_from
+                - father
+                - occupation_father
+                - mother
+                - occupation_mother
+                - address
+                - primary_number
+      responses:
+        200:
+          description: Successfully added.
+        400:
+          description: Error
+      security:
+        - bearerAuth: []
+
+components:
+  responses:
+    UnauthorizedError:
+      description: Access token is missing or invalid.

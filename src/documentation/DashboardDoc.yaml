@@ -1,0 +1,60 @@
+paths:
+  /api/u/dashboard:
+    get:
+      tags:
+        - Users
+      summary: Dashboard Page
+      responses:
+        200:
+          description: Ok
+          content:
+            application/html:
+              schema:
+                type: file
+        400:
+          $ref: "/#/components/responses/BadRequest"
+        401:
+          $ref: "/#/components/responses/UnauthorizedError"
+        500:
+          $ref: "/#/components/responses/ServerError"
+        default:
+          $ref: "/#/components/responses/UnhandledError"
+      security:
+        - bearerAuth: []
+
+  /api/u/dashboard/profile:
+    get:
+      tags:
+        - Users
+      summary: Profile Page
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                title: User Details
+        400:
+          $ref: "/#/components/responses/BadRequest"
+        401:
+          $ref: "/#/components/responses/UnauthorizedError"
+        500:
+          $ref: "/#/components/responses/ServerError"
+        default:
+          $ref: "/#/components/responses/UnhandledError"
+      security:
+        - bearerAuth: []
+
+components:
+  responses:
+    Success:
+      description: OK
+    UnauthorizedError:
+      description: Access token is missing or invalid.
+    BadRequest:
+      description: User Error
+    ServerError:
+      description: Serverside Error
+    UnhandledError:
+      description: Unhandled Error

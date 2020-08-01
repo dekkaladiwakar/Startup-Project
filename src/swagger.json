@@ -55,11 +55,14 @@
       "desciprtion": "Timetable realted APIs"
     }
   ],
-  "servers": [{ "url": "http://localhost:8080", "description": "Main Server" }],
+  "servers": [
+    { "url": "http://localhost:8080", "description": "Development Server" },
+    { "url": "https://tyudent.com/", "description": "Website" }
+  ],
   "components": {
     "securitySchemes": {
       "bearerAuth": {
-        "type": "http",
+        "type": "https",
         "scheme": "bearer",
         "bearerFormat": "JWT"
       }

@@ -1,0 +1,225 @@
+paths:
+  /api/u/occasions:
+    get:
+      tags:
+        - Occasions
+      summary: Occasions Page
+      responses:
+        200:
+          description: Success
+          content:
+            application/html:
+              schema:
+                type: file
+        400:
+          description: Bad Request
+        500:
+          description: Server Error
+        default:
+          description: Unhandled Error
+      security:
+        - bearerAuth: []
+
+  /api/u/occasions/holidays:
+    get:
+      tags:
+        - Occasions
+      summary: Holidays Page
+      responses:
+        200:
+          description: Success
+          content:
+            application/html:
+              schema:
+                type: file
+        400:
+          description: Bad Request
+        500:
+          description: Server Error
+        default:
+          description: Unhandled Error
+      security:
+        - bearerAuth: []
+
+  /api/u/occasions/holidays/all:
+    get:
+      tags:
+        - Occasions
+      summary: Display holidays
+      responses:
+        200:
+          description: Success
+        400:
+          description: Bad Request
+        500:
+          description: Server Error
+        default:
+          description: Unhandled Error
+      security:
+        - bearerAuth: []
+
+  /api/u/occasions/holidays/add:
+    post:
+      tags:
+        - Occasions
+      summary: Add holidays
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                date_of_holiday_from:
+                  type: string
+                date_of_holiday_to:
+                  type: string
+                reason:
+                  type: string
+      responses:
+        200:
+          description: Success
+        400:
+          description: Bad Request
+        500:
+          description: Server Error
+        default:
+          description: Unhandled Error
+      security:
+        - bearerAuth: []
+
+  /api/u/occasions/events:
+    get:
+      tags:
+        - Occasions
+      summary: Events Page
+      responses:
+        200:
+          description: Success
+          content:
+            application/html:
+              schema:
+                type: file
+        400:
+          description: Bad Request
+        500:
+          description: Server Error
+        default:
+          description: Unhandled Error
+      security:
+        - bearerAuth: []
+
+  /api/u/occasions/events/all:
+    get:
+      tags:
+        - Occasions
+      summary: Display events
+      responses:
+        200:
+          description: Success
+        400:
+          description: Bad Request
+        500:
+          description: Server Error
+        default:
+          description: Unhandled Error
+      security:
+        - bearerAuth: []
+
+  /api/u/occasions/events/add:
+    post:
+      tags:
+        - Occasions
+      summary: Add events
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                date_of_event_from:
+                  type: string
+                date_of_event_to:
+                  type: string
+                reason:
+                  type: string
+      responses:
+        200:
+          description: Success
+        400:
+          description: Bad Request
+        500:
+          description: Server Error
+        default:
+          description: Unhandled Error
+      security:
+        - bearerAuth: []
+  /api/u/occasions/announcements:
+    get:
+      tags:
+        - Occasions
+      summary: Announcements Page
+      responses:
+        200:
+          description: Success
+          content:
+            application/html:
+              schema:
+                type: file
+        400:
+          description: Bad Request
+        500:
+          description: Server Error
+        default:
+          description: Unhandled Error
+      security:
+        - bearerAuth: []
+
+  /api/u/occasions/announcements/all:
+    get:
+      tags:
+        - Occasions
+      summary: Display announcements
+      responses:
+        200:
+          description: Success
+        400:
+          description: Bad Request
+        500:
+          description: Server Error
+        default:
+          description: Unhandled Error
+      security:
+        - bearerAuth: []
+
+  /api/u/occasions/announcements/add:
+    post:
+      tags:
+        - Occasions
+      summary: Add announcements
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                content:
+                  type: string
+      responses:
+        200:
+          description: Success
+        400:
+          description: Bad Request
+        500:
+          description: Server Error
+        default:
+          description: Unhandled Error
+      security:
+        - bearerAuth: []
+
+components:
+  responses:
+    UnauthorizedError:
+      description: Access token is missing or invalid.

@@ -10,7 +10,7 @@ const conn: Pool = require("../../../../config/connection");
 // Custom Routes
 const addAttendance = require("./addAttendance");
 
-// @route   GET /api/u/attendence
+// @route   GET /api/u/attendance
 // @desc    Attendance Page
 // @access  Private
 router.get(
@@ -21,7 +21,7 @@ router.get(
   }
 );
 
-// @route   GET /api/u/attendence/all
+// @route   GET /api/u/attendance/all
 // @desc    Send section attendance
 // @access  Private
 router.get(
@@ -33,11 +33,15 @@ router.get(
     const class_id = req.body.class_id;
 
     conn.query(
-      "SELECT * FROM attendence WHERE institute_id = ? AND class_id = ?",
-      [institute_id, class_id],
+      "SELECT attendance_data FROM attendance_day INNER JOIN institute_classes ON attendance_day.class_id = ? WHERE institute_id = ?",
+      [class_id, institute_id],
       (err, rows) => {
         if (err) console.log("Query Error : ", err);
-        else res.status(200).json(rows);
+        else {
+          const rowsJSON = JSON.parse(rows[0].attendance_data);
+          const student_ids = rowsJSON.studentIDs;
+          res.status(200).json(rowsJSON);
+        }
       }
     );
   }

@@ -1,0 +1,118 @@
+paths:
+  /api/u/timetable:
+    get:
+      tags:
+        - Timetable
+      summary: Timetable Page
+      responses:
+        200:
+          description: Ok
+          content:
+            application/html:
+              schema:
+                type: file
+        400:
+          $ref: "#/components/responses/BadRequest"
+        401:
+          $ref: "#/components/responses/UnauthorizedError"
+        500:
+          $ref: "#/components/responses/ServerError"
+        default:
+          $ref: "#/components/responses/UnhandledError"
+      security:
+        - bearerAuth: []
+
+  /api/u/timetable/addTimeSlots:
+    post:
+      tags:
+        - Timetable
+      summary: Add timeslots for timetable
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                start_time:
+                  type: string
+                end_time:
+                  type: string
+                description:
+                  type: string
+              required:
+                - start_time
+                - end_time
+                - description
+            example:
+              start_time: 9:30 AM
+              end_time: 10:15 AM
+              description: First Period
+      responses:
+        200:
+          $ref: "#/components/responses/Success"
+        400:
+          $ref: "#/components/responses/BadRequest"
+        401:
+          $ref: "#/components/responses/UnauthorizedError"
+        500:
+          $ref: "#/components/responses/ServerError"
+        default:
+          $ref: "#/components/responses/UnhandledError"
+      security:
+        - bearerAuth: []
+
+  /api/u/timetable/addTimetable:
+    post:
+      tags:
+        - Timetable
+      summary: Add timetable
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                timeslot_id:
+                  type: number
+                day_id:
+                  type: number
+                class_id:
+                  type: number
+                teacher_id:
+                  type: number
+                subject_id:
+                  type: string
+              required:
+                - timeslot_id
+                - day_id
+                - class_id
+                - teacher_id
+                - subject_id
+      responses:
+        200:
+          $ref: "#/components/responses/Success"
+        400:
+          $ref: "#/components/responses/BadRequest"
+        401:
+          $ref: "#/components/responses/UnauthorizedError"
+        500:
+          $ref: "#/components/responses/ServerError"
+        default:
+          $ref: "#/components/responses/UnhandledError"
+      security:
+        - bearerAuth: []
+
+components:
+  responses:
+    Success:
+      description: OK
+    UnauthorizedError:
+      description: Access token is missing or invalid.
+    BadRequest:
+      description: User Error
+    ServerError:
+      description: Serverside Error
+    UnhandledError:
+      description: Unhandled Error

@@ -2,11 +2,12 @@
   "name": "startup-project",
   "version": "1.0.0",
   "description": "Management System",
-  "main": "server.js",
+  "main": "./src/server.ts",
   "scripts": {
-    "server": "nodemon ./dist/server.js",
+    "dist": "nodemon ./dist/server.js",
+    "server": "nodemon ./src/server.ts",
     "test": "nodemon test3.js",
-    "dev": "nodemon ./src/server.ts",
+    "dev": "nodemon -e yaml,ts",
     "build": "tsc -p ."
   },
   "author": "Diwakar",

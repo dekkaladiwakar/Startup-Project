@@ -13,7 +13,7 @@ const addClass = require("./add_class");
 // Validation
 const validateClassInput = require("../../../../validation/private-route-validation/class");
 
-// @route   GET /api/u/class
+// @route   GET /api/u/classes
 // @desc    Class page
 // @access  Private
 router.get(
@@ -24,7 +24,7 @@ router.get(
   }
 );
 
-// @route   GET /api/u/class/all
+// @route   GET /api/u/classes/all
 // @desc    get all available classes
 // @access  Private
 router.get(
@@ -32,7 +32,11 @@ router.get(
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     conn.query(
-      "SELECT class, section FROM classes WHERE institute_id = ?",
+      "SELECT class, section, class_name " +
+        "FROM classes " +
+        "INNER JOIN institute_classes " +
+        "ON classes.class_id = institute_classes.class_id " +
+        "WHERE institute_id = ? ",
       // @ts-expect-error
       req.user.institute_id,
       (err, rows) => {
@@ -43,7 +47,7 @@ router.get(
   }
 );
 
-// @route   POST /api/u/class/add
+// @route   POST /api/u/classes/add
 // @desc    Add class
 // @access  Private
 router.post(

@@ -1,0 +1,111 @@
+paths:
+  /api/u/teachers:
+    get:
+      tags:
+        - Teachers
+      summary: Teachers Page
+      responses:
+        200:
+          $ref: "#/components/responses/Success"
+          content:
+            application/html:
+              schema:
+                type: file
+        400:
+          $ref: "#/components/responses/BadRequest"
+        401:
+          $ref: "#/components/responses/UnauthorizedError"
+        500:
+          $ref: "#/components/responses/ServerError"
+        default:
+          $ref: "#/components/responses/UnhandledError"
+      security:
+        - bearerAuth: []
+
+  /api/u/teachers/all:
+    get:
+      tags:
+        - Teachers
+      summary: Retirve all teachers
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    teacher_id:
+                      type: number
+                    full_name:
+                      type: string
+                    phone_number:
+                      type: string
+                    email:
+                      type: string
+        400:
+          $ref: "#/components/responses/BadRequest"
+        401:
+          $ref: "#/components/responses/UnauthorizedError"
+        500:
+          $ref: "#/components/responses/ServerError"
+        default:
+          $ref: "#/components/responses/UnhandledError"
+      security:
+        - bearerAuth: []
+
+  /api/u/teachers/add:
+    post:
+      tags:
+        - Teachers
+      summary: Add teachers
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                full_name:
+                  type: string
+                date_from:
+                  type: string
+                date_to:
+                  type: string
+                email:
+                  type: string
+                phone_number:
+                  type: string
+              required:
+                - full_name
+                - date_from
+                - phone_number
+                - email
+      responses:
+        200:
+          $ref: "#/components/responses/Success"
+        400:
+          $ref: "#/components/responses/BadRequest"
+        401:
+          $ref: "#/components/responses/UnauthorizedError"
+        500:
+          $ref: "#/components/responses/ServerError"
+        default:
+          $ref: "#/components/responses/UnhandledError"
+      security:
+        - bearerAuth: []
+
+components:
+  responses:
+    Success:
+      description: OK
+    UnauthorizedError:
+      description: Access token is missing or invalid.
+    BadRequest:
+      description: User Error
+    ServerError:
+      description: Serverside Error
+    UnhandledError:
+      description: Unhandled Error

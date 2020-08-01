@@ -4,7 +4,6 @@ paths:
       tags:
         - Users
       summary: Sending index.html file
-      access: public
       responses:
         200:
           description: Successfully loaded.
@@ -16,7 +15,6 @@ paths:
       tags:
         - Users
       summary: Sending login.html file
-      access: public
       responses:
         200:
           description: Successfully loaded.
@@ -27,7 +25,6 @@ paths:
       tags:
         - Users
       summary: Institute login
-      access: public
       requestBody:
         required: true
         content:
@@ -39,12 +36,14 @@ paths:
                   type: string
                 password:
                   type: string
+                  format: password
       responses:
         200:
           description: Successfully Logged In.
           content:
             application/json:
-              schema: object
+              schema:
+                type: object
         400:
           description: Check details and login again.
 
@@ -53,7 +52,6 @@ paths:
       tags:
         - Users
       summary: Teacher login
-      access: public
       requestBody:
         required: true
         content:
@@ -65,12 +63,14 @@ paths:
                   type: string
                 password:
                   type: string
+                  format: password
       responses:
         200:
           description: Successfully Logged In.
           content:
             application/json:
-              schema: object
+              schema:
+                type: object
         400:
           description: Check details and login again.
 
@@ -79,7 +79,6 @@ paths:
       tags:
         - Users
       summary: Sending register.html file
-      access: public
       responses:
         200:
           description: Successfully loaded.
@@ -101,6 +100,10 @@ paths:
                   type: string
                 password:
                   type: string
+                  format: password
+                password2:
+                  type: string
+                  format: password
                 institute_name:
                   type: string
                 institute_principal:
@@ -119,11 +122,20 @@ paths:
                   type: string
                 city:
                   type: string
-                date_of_creation:
-                  type: string
-                time_of_creation:
-                  type: string
-      access: public
+              required:
+                - institute_id
+                - password
+                - password2
+                - institute_name
+                - institute_principal
+                - email
+                - phone_number
+                - education_type
+                - address
+                - city
+                - state
+                - pincode
+
       responses:
         200:
           description: User successfully registered.
@@ -154,8 +166,7 @@ paths:
     get:
       tags:
         - Users
-      summary: Checking Payload (Test Route)
-      access: Private
+      summary: Checking Payload -- Development
       responses:
         "200":
           description: User Details Reeceived.
