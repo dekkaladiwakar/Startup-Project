@@ -6,9 +6,19 @@ paths:
       summary: Sending index.html file
       responses:
         200:
-          description: Successfully loaded.
+          description: Ok
+          content:
+            application/html:
+              schema:
+                type: file
         400:
-          description: Bad Request.
+          $ref: "#/components/responses/BadRequest"
+        401:
+          $ref: "#/components/responses/UnauthorizedError"
+        500:
+          $ref: "#/components/responses/ServerError"
+        default:
+          $ref: "#/components/responses/UnhandledError"
 
   /api/users/login:
     get:
@@ -17,9 +27,15 @@ paths:
       summary: Sending login.html file
       responses:
         200:
-          description: Successfully loaded.
+          $ref: "#/components/responses/Success"
         400:
-          description: Bad Request.
+          $ref: "#/components/responses/BadRequest"
+        401:
+          $ref: "#/components/responses/UnauthorizedError"
+        500:
+          $ref: "#/components/responses/ServerError"
+        default:
+          $ref: "#/components/responses/UnhandledError"
 
     post:
       tags:
@@ -45,7 +61,13 @@ paths:
               schema:
                 type: object
         400:
-          description: Check details and login again.
+          $ref: "#/components/responses/BadRequest"
+        401:
+          $ref: "#/components/responses/UnauthorizedError"
+        500:
+          $ref: "#/components/responses/ServerError"
+        default:
+          $ref: "#/components/responses/UnhandledError"
 
   /api/users/teacherLogin:
     post:
@@ -72,7 +94,13 @@ paths:
               schema:
                 type: object
         400:
-          description: Check details and login again.
+          $ref: "#/components/responses/BadRequest"
+        401:
+          $ref: "#/components/responses/UnauthorizedError"
+        500:
+          $ref: "#/components/responses/ServerError"
+        default:
+          $ref: "#/components/responses/UnhandledError"
 
   /api/users/register:
     get:
@@ -81,9 +109,15 @@ paths:
       summary: Sending register.html file
       responses:
         200:
-          description: Successfully loaded.
+          $ref: "#/components/responses/Success"
         400:
-          description: Bad Request.
+          $ref: "#/components/responses/BadRequest"
+        401:
+          $ref: "#/components/responses/UnauthorizedError"
+        500:
+          $ref: "#/components/responses/ServerError"
+        default:
+          $ref: "#/components/responses/UnhandledError"
 
     post:
       tags:
@@ -150,17 +184,15 @@ paths:
                     type: string
 
         400:
-          description: Errors found.
-          content:
-            application/json:
-              schema:
-                type: object
+          $ref: "#/components/responses/BadRequest"
+        401:
+          $ref: "#/components/responses/UnauthorizedError"
         500:
-          description: Server Error.
-          content:
-            application/json:
-              schema:
-                type: object
+          $ref: "#/components/responses/ServerError"
+        default:
+          $ref: "#/components/responses/UnhandledError"
+      security:
+        - bearerAuth: []
 
   /api/users/checkToken:
     get:
@@ -168,18 +200,32 @@ paths:
         - Users
       summary: Checking Payload -- Development
       responses:
-        "200":
+        200:
           description: User Details Reeceived.
           content:
             application/json:
               schema:
                 type: object
-        "400":
-          description: Bad token.
+        400:
+          $ref: "#/components/responses/BadRequest"
+        401:
+          $ref: "#/components/responses/UnauthorizedError"
+        500:
+          $ref: "#/components/responses/ServerError"
+        default:
+          $ref: "#/components/responses/UnhandledError"
       security:
         - bearerAuth: []
 
 components:
   responses:
+    Success:
+      description: OK
     UnauthorizedError:
       description: Access token is missing or invalid.
+    BadRequest:
+      description: User Error
+    ServerError:
+      description: Serverside Error
+    UnhandledError:
+      description: Unhandled Error

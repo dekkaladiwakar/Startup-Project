@@ -55,4 +55,13 @@ router.post(
   }
 );
 
+// @route   POST /api/u/homework/add
+// @desc    Add homework
+// @access  Private
+router.get(
+  "/:id",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {}
+);
+
 module.exports = router;
