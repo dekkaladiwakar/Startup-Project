@@ -1,0 +1,78 @@
+paths:
+  /api/u/exams:
+    get:
+      tags:
+        - Exams
+      summary: Exam Page
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                institute_id:
+                  type: string
+                class_id:
+                  type: number
+              required:
+                - institute_id
+                - class_id
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    exam_type:
+                      type: string
+                    details:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          subject:
+                            type: string
+                          date:
+                            type: string
+                          start_time:
+                            type: string
+                          end_time:
+                            type: string
+                          syllabus:
+                            type: string
+        400:
+          description: User Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserError"
+        401:
+          $ref: "#/components/responses/UnauthorizedError"
+        500:
+          $ref: "#/components/responses/ServerError"
+        default:
+          $ref: "#/components/responses/UnhandledError"
+      security:
+        - bearerAuth: []
+
+components:
+  responses:
+    Success:
+      description: OK
+    UnauthorizedError:
+      description: Access token is missing or invalid.
+    ServerError:
+      description: Serverside Error
+    UnhandledError:
+      description: Unhandled Error
+  schemas:
+    UserError:
+      type: object
+      properties:
+        errors:
+          type: object

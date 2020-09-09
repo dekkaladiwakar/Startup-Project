@@ -53,6 +53,14 @@
     {
       "name": "Timetable",
       "desciprtion": "Timetable realted APIs"
+    },
+    {
+      "name": "What's Around",
+      "desciprtion": "City events related APIs"
+    },
+    {
+      "name": "Quiz",
+      "desciprtion": "City events related APIs"
     }
   ],
   "servers": [

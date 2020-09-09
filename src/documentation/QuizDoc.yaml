@@ -1,0 +1,122 @@
+paths:
+  /api/u/quiz:
+    get:
+      tags:
+        - Quiz
+      summary: Quiz Page
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                institute_id:
+                  type: string
+                class_id:
+                  type: number
+              required:
+                - institute_id
+                - class_id
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    question_number:
+                      type: number
+                    question:
+                      type: string
+                    options:
+                      type: array
+                      items:
+                        type: string
+                  required:
+                    - question
+                    - options
+        400:
+          description: User Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserError"
+        401:
+          $ref: "#/components/responses/UnauthorizedError"
+        500:
+          $ref: "#/components/responses/ServerError"
+        default:
+          $ref: "#/components/responses/UnhandledError"
+      security:
+        - bearerAuth: []
+    post:
+      tags:
+        - Quiz
+      summary: Quiz Answer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                institute_id:
+                  type: string
+                class_id:
+                  type: number
+                question_number:
+                  type: number
+                option:
+                  type: string
+              required:
+                - institute_id
+                - class_id
+                - question_number
+                - option
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: boolean
+                  answer:
+                    type: string
+        400:
+          description: User Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserError"
+        401:
+          $ref: "#/components/responses/UnauthorizedError"
+        500:
+          $ref: "#/components/responses/ServerError"
+        default:
+          $ref: "#/components/responses/UnhandledError"
+      security:
+        - bearerAuth: []
+
+components:
+  responses:
+    Success:
+      description: OK
+    UnauthorizedError:
+      description: Access token is missing or invalid.
+    ServerError:
+      description: Serverside Error
+    UnhandledError:
+      description: Unhandled Error
+  schemas:
+    UserError:
+      type: object
+      properties:
+        errors:
+          type: object

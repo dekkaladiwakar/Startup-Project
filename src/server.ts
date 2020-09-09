@@ -83,7 +83,8 @@ app.use("/api/u/tests", tests);
 app.use("/api/u/homework", homework);
 app.use("/api/u/timetable", timetable);
 
-const port = process.env.PORT || process.env.USER_PORT;
+//const port = process.env.PORT || process.env.USER_PORT;
+const port = 8080;
 
 // Incoming requests listener
 app.listen(port, () => {

@@ -1,0 +1,61 @@
+paths:
+  /api/u/around:
+    get:
+      tags:
+        - What's Around
+      summary: City Events Page
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                institute_id:
+                  type: string
+                city:
+                  type: string
+              required:
+                - institute_id
+                - city
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    picture:
+                      type: string
+                      example: https://tyudent.com/dir1/img.jpeg
+                    description:
+                      type: string
+                    start:
+                      type: datetime
+                    end:
+                      type: datetime
+                    audience:
+                      type: string
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: object
+        500:
+          description: Server Error, please try again.
+      security:
+        - bearerAuth: []
+
+components:
+  responses:
+    UnauthorizedError:
+      description: Access token is missing or invalid.
